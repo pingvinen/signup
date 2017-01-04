@@ -6,7 +6,7 @@ title: Singup to Simplii
     
     <h1>Sign up to Simplii</h1>
 
-    <form action="welcome" netlify>
+    <form id="signup" name="Signup" action="welcome" netlify>
 
     <div class="form-wrapper col-sm-8">
       
@@ -15,19 +15,19 @@ title: Singup to Simplii
           <h2>0 - Your plan</h2>
           <div class="form-check">
             <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios1" value="option1" checked>
+              <input type="radio" class="form-check-input" name="plan" id="plan-1" value="plan-1" checked>
               1 GB
             </label>
           </div>
           <div class="form-check">
           <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios2" value="option2">
+              <input type="radio" class="form-check-input" name="plan" id="plan-2" value="plan-2">
               10 GB
             </label>
           </div>
           <div class="form-check">
           <label class="form-check-label">
-              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios2" value="option2">
+              <input type="radio" class="form-check-input" name="plan" id="plan-2" value="plan-3">
               20 GB
             </label>
           </div>
@@ -40,20 +40,20 @@ title: Singup to Simplii
           <div class="number-options">
             <div class="form-check">
               <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="gridRadios" id=" gridRadios1" value="option1" checked>
+                    <input class="form-check-input" type="radio" name="number-port" id="number-port-false" value="number-port-false" checked>
                   New number
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="gridRadios" id=" gridRadios2" value="option2" checked>
+                    <input class="form-check-input" type="radio" name="number-port" id="number-port-true" value="number-port-true" checked>
                   Transfer number
                 </label>
               </div>
           </div>
           <div class="transfer">
             <label>Your number to be transfered</label>
-            <input class="form-control" type="number" name="phone-number" id="port-number" />
+            <input class="form-control" type="number" name="port-number" id="port-number" />
           </div>
         </div>
       
@@ -72,7 +72,7 @@ title: Singup to Simplii
   
           <div class="form-group">
             <label for="contact-email">Email address</label>
-            <input type="email" class="form-control" id="contact-email"     aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" id="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We promise not to share your email with anyone else and will only send you occational informational emails.</small>
           </div>
   
@@ -82,8 +82,8 @@ title: Singup to Simplii
         <div class="form-group box" id="delivery">
           <h2>2 - Delivery</h2>
           <div class="form-group">
-            <label for="contact-name">Your name</label>
-            <input type="text" class="form-control" id="delivery-name"   aria-describedby="nameHelp" placeholder="Enter your name">
+            <label for="delivery-name">Your name</label>
+            <input type="text" class="form-control" id="delivery-name" aria-describedby="nameHelp" placeholder="Enter your name">
             <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
           </div>
 
@@ -105,18 +105,18 @@ title: Singup to Simplii
           <div class="row">
             <div class="form-group col-sm-3">
               <label for="contact-delivery-area">Postal code</label>
-              <input type="number" class="form-control" id="  contact-delivery-area"aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
+              <input type="number" class="form-control" id="contact-delivery-area"aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
             </div>
   
             <div class="form-group col-sm-9">
                 <label for="contact-delivery-area">State</label>
-                <input type="text" class="form-control" id=" contact-delivery-state"aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
+                <input type="text" class="form-control" id="contact-delivery-state"aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
                 </div>
             </div>
 
           <div class="form-group">
-                <label for="exampleTextarea">Special delivery instructions</label>
-                <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
+                <label for="delivery-instructions">Special delivery instructions</label>
+                <textarea class="form-control" id="delivery-instructions" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
             </div>
         </div>
 
@@ -132,7 +132,7 @@ title: Singup to Simplii
               </div>
               <div class="form-group">
                 <label for="credit-card-number">Credit card number</label>
-                <input type="number" class="form-control" id="credit-card-number" aria-describedby="numberHelp"   placeholder="**** **** **** ****">
+                <input type="number" class="form-control" id="credit-card-number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
               </div>
   
               <div class="row">
