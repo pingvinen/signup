@@ -6,7 +6,7 @@ title: Singup to Simplii
     
     <h1>Sign up to Simplii</h1>
 
-    <form id="signup" name="Signup" action="welcome" netlify>
+    <form id="signup-form" name="Signup" action="welcome" netlify>
 
     <div class="form-wrapper col-sm-8">
       
@@ -61,18 +61,18 @@ title: Singup to Simplii
           <h2>1 - Contact</h2>
           <div class="form-group">
             <label for="contact-name">Your name</label>
-            <input type="text" class="form-control" id="contact-name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="contact-name" name="contact-name" placeholder="Enter your name">
           </div>
 
           <div class="form-group">
             <label for="contact-phone">Contact phone number</label>
-            <input type="number" class="form-control" id="contact-phone" aria-describedby="phoneHelp" placeholder="Enter contact phone number">
+            <input type="number" class="form-control" id="contact-phone" name="contact-phone" aria-describedby="phoneHelp" placeholder="Enter contact phone number">
             <small id="phoneHelp" class="form-text text-muted">We only call you on this number if really nescesery</small>
           </div>
   
           <div class="form-group">
             <label for="contact-email">Email address</label>
-            <input type="email" class="form-control" id="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
+            <input type="email" class="form-control" id="contact-email" name="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We promise not to share your email with anyone else and will only send you occational informational emails.</small>
           </div>
   
@@ -83,40 +83,40 @@ title: Singup to Simplii
           <h2>2 - Delivery</h2>
           <div class="form-group">
             <label for="delivery-name">Your name</label>
-            <input type="text" class="form-control" id="delivery-name" aria-describedby="nameHelp" placeholder="Enter your name">
+            <input type="text" class="form-control" id="delivery-name" name="delivery-name" aria-describedby="nameHelp" placeholder="Enter your name">
             <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
           </div>
 
           <div class="form-group">
-            <label for="contact-delivery-address">Address</label>
-            <input type="text" class="form-control" id="contact-delivery-address" aria-describedby="delivery-addressHelp" placeholder="Enter your delivery address">
+            <label for="delivery-address">Address</label>
+            <input type="text" class="form-control" id="delivery-address" name="delivery-address" aria-describedby="delivery-addressHelp" placeholder="Enter your delivery address">
           </div>
 
           <div class="form-group">
-            <label for="contact-delivery-address2">Floor, house name, etc.</label>
-            <input type="text" class="form-control" id="contact-delivery-address2" aria-describedby="delivery-address2Help" placeholder="Enter your Floor, house name, etc.">
+            <label for="delivery-address2">Floor, house name, etc.</label>
+            <input type="text" class="form-control" id="delivery-address2" name="delivery-address2" aria-describedby="delivery-address2Help" placeholder="Enter your Floor, house name, etc.">
           </div>
 
           <div class="form-group">
-            <label for="contact-delivery-area">Area</label>
-            <input type="text" class="form-control" id="contact-delivery-area"aria-describedby="delivery-areaHelp" placeholder="Eg. Miguel Hidalgo">
+            <label for="delivery-area">Area</label>
+            <input type="text" class="form-control" id="delivery-area" name="delivery-area" aria-describedby="delivery-areaHelp" placeholder="Eg. Miguel Hidalgo">
           </div>
 
           <div class="row">
             <div class="form-group col-sm-3">
-              <label for="contact-delivery-area">Postal code</label>
-              <input type="number" class="form-control" id="contact-delivery-area"aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
+              <label for="delivery-postal">Postal code</label>
+              <input type="number" class="form-control" id="delivery-postal" name="delivery-postal" aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
             </div>
   
             <div class="form-group col-sm-9">
-                <label for="contact-delivery-area">State</label>
-                <input type="text" class="form-control" id="contact-delivery-state"aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
+                <label for="delivery-area">State</label>
+                <input type="text" class="form-control" id="delivery-state" name="delivery-state" aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
                 </div>
             </div>
 
           <div class="form-group">
                 <label for="delivery-instructions">Special delivery instructions</label>
-                <textarea class="form-control" id="delivery-instructions" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
+                <textarea class="form-control" id="delivery-instructions" name="delivery-instructions" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
             </div>
         </div>
 
@@ -128,7 +128,7 @@ title: Singup to Simplii
   
             <div class="form-group">
                 <label for="credit-name">Name on card</label>
-                <input type="text" class="form-control" id="credit-name"   placeholder="Enter your name">
+                <input type="text" class="form-control" id="credit-name" placeholder="Enter your name">
               </div>
               <div class="form-group">
                 <label for="credit-card-number">Credit card number</label>
