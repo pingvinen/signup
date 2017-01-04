@@ -4,10 +4,11 @@ title: Singup to Simplii
 
 <div class="container">
     
-  <form action="#" >
+    <h1>Sign up to Simplii</h1>
+    
+    <form action="#" >
 
-    <div class="form-wrapper col-sm-9">
-        <h1>Sign up to Simplii</h1>
+    <div class="form-wrapper col-sm-8">
       
         <!--
         <div class="form-group box">
@@ -52,7 +53,7 @@ title: Singup to Simplii
           </div>
           <div class="transfer">
             <label>Your number to be transfered</label>
-            <input class="form-control" type="number" name="phone-number" />
+            <input class="form-control" type="number" name="phone-number" id="port-number" />
           </div>
         </div>
       
@@ -65,14 +66,14 @@ title: Singup to Simplii
 
           <div class="form-group">
             <label for="contact-phone">Contact phone number</label>
-            <input type="email" class="form-control" id="contact-phone"   aria-describedby="phoneHelp" placeholder="Enter contact phone number">
+            <input type="number" class="form-control" id="contact-phone" aria-describedby="phoneHelp" placeholder="Enter contact phone number">
             <small id="phoneHelp" class="form-text text-muted">We only call you on this number if really nescesery</small>
           </div>
   
           <div class="form-group">
             <label for="contact-email">Email address</label>
             <input type="email" class="form-control" id="contact-email"     aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <small id="emailHelp" class="form-text text-muted">We promise not to share your email with anyone else and will only send you occational informational emails.</small>
           </div>
   
         </div>
@@ -82,7 +83,7 @@ title: Singup to Simplii
           <h2>2 - Delivery</h2>
           <div class="form-group">
             <label for="contact-name">Your name</label>
-            <input type="text" class="form-control" id="contact-name"   aria-describedby="nameHelp" placeholder="Enter your name">
+            <input type="text" class="form-control" id="delivery-name"   aria-describedby="nameHelp" placeholder="Enter your name">
             <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
           </div>
 
@@ -154,14 +155,21 @@ title: Singup to Simplii
 
         
 
-        <div class="form-group" id="submit">
-          <button type="submit" class="btn btn-primary">Sign up</button>
-        </div>
+        
     </div>
   
   
-    <div class="sidebar box col-sm-3">
-      <h3>Your order</h3>
+    <div class="sidebar" id="sidebar">
+        <div class="box">
+            <h3>Your order</h3>
+            <p id="sum-contact-name"></p>
+            <p id="sum-contact-phone"></p>
+            <p id="sum-contact-email"></p>  
+            <div class="form-group" id="submit">
+                <button type="submit" class="btn btn-primary">Sign up</button>
+            </div>
+        </div>
+        <p>Call us now if you want help signing up.</p>
     </div>
     </form>
 </div>
