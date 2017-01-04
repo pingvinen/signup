@@ -1,25 +1,164 @@
 ---
-title: Welcome to Teligente
+title: Singup to Simplii
 ---
 
-<div class="welcome">
-  <h1>Teligente front page</h1>
+<div class="container">
+    
+  <form action="#" >
+
+    <div class="form-wrapper col-sm-10">
+        <h1>Sign up for Teligente</h1>
+      
+        <fieldset class="form-group">
+          <h2>1 - Your plan</h2>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios1" value="option1" checked>
+              1 GB
+            </label>
+          </div>
+          <div class="form-check">
+          <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios2" value="option2">
+              10 GB
+            </label>
+          </div>
+          <div class="form-check">
+          <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optionsRadios" id="  optionsRadios2" value="option2">
+              20 GB
+            </label>
+          </div>
+          
+        </fieldset>
+      
+        <div class="form-group" id="contact">
+          <h2>2 - Contact information</h2>
+          <div class="form-group">
+            <label for="contact-name">Your name</label>
+            <input type="email" class="form-control" id="contact-name" placeholder="Enter your name">
+          </div>
+
+          <div class="form-group">
+            <label for="contact-phone">Contact phone number</label>
+            <input type="email" class="form-control" id="contact-phone"   aria-describedby="phoneHelp" placeholder="Enter contact phone number">
+            <small id="phoneHelp" class="form-text text-muted">We only call you on this number if really nescesery</small>
+          </div>
   
-  <form name="contact" action="thank-you" netlify>
-  <p>
-    <label>Your Name:</label>
-    <input type="text" name="name">
-  </p>
-  <p>
-    <label>Your Email</label>
-    <input type="email" name="email">
-  </p>
-  <p>
-    <label>Message</label>
-    <textarea name="message"></textarea>
-  </p>
-  <p>
-    <button>Send</button>
-  </p>
-</form>
+          <div class="form-group">
+            <label for="contact-email">Email address</label>
+            <input type="email" class="form-control" id="contact-email"     aria-describedby="emailHelp" placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+  
+        </div>
+  
+        <div class="form-group" id="number">
+          <h2>3 - Mobile number</h2>
+          <div class="number-options">
+            <div class="form-check">
+              <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="gridRadios" id=" gridRadios1" value="option1" checked>
+                  New number
+                </label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="gridRadios" id=" gridRadios2" value="option2" checked>
+                  Transfer number
+                </label>
+              </div>
+          </div>
+          <div class="transfer">
+            <label>Your number</label>
+            <input type="number" name="phone-number" />
+          </div>
+        </div>
+
+        <div class="form-group" id="delivery">
+          <h2>4 - Delivery information</h2>
+          <div class="form-group">
+            <label for="contact-name">Your name</label>
+            <input type="text" class="form-control" id="contact-name"   aria-describedby="nameHelp" placeholder="Enter your name">
+            <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-delivery-address">Address</label>
+            <input type="text" class="form-control" id="contact-delivery-address" aria-describedby="delivery-addressHelp" placeholder="Enter your delivery address">
+          </div>
+
+          <div class="form-group">
+            <label for="contact-delivery-address2">Floor, house name, etc.</label>
+            <input type="text" class="form-control" id="contact-delivery-address2" aria-describedby="delivery-address2Help" placeholder="Enter your Floor, house name, etc.">
+          </div>
+
+          <div class="form-group">
+            <label for="contact-delivery-area">Area</label>
+            <input type="text" class="form-control" id="contact-delivery-area"aria-describedby="delivery-areaHelp" placeholder="Enter your delivery area">
+          </div>
+
+          <div class="row">
+            <div class="form-group col-sm-3">
+              <label for="contact-delivery-area">Postal code</label>
+              <input type="number" class="form-control" id="  contact-delivery-area"aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
+            </div>
+  
+            <div class="form-group col-sm-9">
+              <label for="contact-delivery-area">State</label>
+              <input type="email" class="form-control" id=" contact-delivery-state"aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="payment">
+          <h2>5 - Payment</h2>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" checked>
+              Use delivery address as billing address
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-6" id="creditcard">
+            <h4>Credit card information</h4>
+
+          <div class="form-group">
+              <label for="credit-name">Name on card</label>
+              <input type="email" class="form-control" id="credit-name"   placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+              <label for="credit-card-number">Credit card number</label>
+              <input type="number" class="form-control" id="credit-card-number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
+            </div>
+
+            <div class="row">
+              <div class="form-group col-sm-4">
+                <label for="exp-date">Exp. Month</label>
+                <input class="form-control" type="number" lenght="2" placeholder="MM">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="exp-date">Exp. Year</label>
+                <input class="form-control" type="number" lenght="2" placeholder="YY">
+              </div>
+              <div class="form-group col-sm-4">
+                <label for="exp-date">CVV</label>
+                <input class="form-control" type="number" lenght="3" placeholder="***">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group" id="submit">
+          <button type="submit" class="btn btn-primary">Sign up</button>
+        </div>
+    </div>
+  
+  
+    <div class="sidebar col-sm-2">
+      <h2>Sidebar: Your order</h2>
+    </div>
+    </form>
 </div>
