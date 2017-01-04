@@ -1,1 +1,42 @@
 @charset "utf-8";
+
+body {
+	background: #fefefe url('/images/background-dot.png') fixed repeat-x left top;
+	background-size: 350px;
+	padding-top: 80px;
+}
+
+.logo {
+	position: fixed;
+	top: 25px;
+	left: 25px;
+}
+
+h1 {
+	color: #fff;
+	font-weight: 100;
+	font-size: 3rem;
+	margin-bottom: 3rem;
+}
+
+.box {
+	padding: 35px;
+	margin-bottom: 40px;
+	background: #fff;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+
+h2 {
+	font-size: 2rem;
+	font-weight: 600;
+	margin-bottom: 1.5rem;
+}
+
+
+.sidebar {
+	margin-top: 100px;
+}
+
+h3 {
+
+}
