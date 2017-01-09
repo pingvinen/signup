@@ -199,7 +199,7 @@ $(function() {
          * then 8 digits
          */
 
-        return $.trim(input).replace(/ /g, '').match(/(\+?52)?1?55\d{8}/);
+        return $.trim(input).replace(/ /g, '').match(/^(\+?52)?1?55\d{8}$/);
     }
 
     function getNumberValidationErrors() {
