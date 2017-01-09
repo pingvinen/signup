@@ -216,6 +216,12 @@ $(function() {
         return usernameIsOk && domainIsOk;
     }
 
+    function isNumeric(input) {
+        var cleaned = $.trim(input).replace(/ /g, '');
+
+        return !isNaN(parseFloat(cleaned)) && isFinite(cleaned);
+    }
+
     function getNumberValidationErrors() {
         var errors = [];
 
@@ -349,6 +355,73 @@ $(function() {
 
     function getPaymentValidationErrors() {
         var errors = [];
+
+        var $name = $form.find('#credit-card-name');
+        var $pan = $form.find('#credit-card-number');
+        var $expMonth = $form.find('#credit-card-exp-month');
+        var $expYear = $form.find('#credit-card-exp-year');
+        var $cvv = $form.find('#credit-card-cvv');
+
+        if (stringIsEmptyOrWhitespace($name.val())) {
+            errors.push({
+                message: 'You must provide the card holder name',
+                group: 'payment'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($pan.val())) {
+            errors.push({
+                message: 'You must provide card number',
+                group: 'payment'
+            });
+        }
+        else if (!isNumeric($pan.val()) || $pan.val().length < 16) {
+            errors.push({
+                message: 'The card number must be numbers only and a minimum of 16 digits',
+                group: 'payment'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($expMonth.val())) {
+            errors.push({
+                message: 'You must provide the card expiry month',
+                group: 'payment'
+            });
+        }
+        else if (!isNumeric($expMonth.val()) || $expMonth.val() < 1 || $expMonth.val() > 12) {
+            errors.push({
+                message: 'The card expiry month must be a number between 1 and 12',
+                group: 'payment'
+            });
+        }
+
+        var thisYear = (new Date()).getFullYear() - 2000;
+        if (stringIsEmptyOrWhitespace($expYear.val())) {
+            errors.push({
+                message: 'You must provide the card expiry year',
+                group: 'payment'
+            });
+        }
+        else if (!isNumeric($expYear.val()) || $expYear.val() < thisYear || $expYear.val() > 99) {
+            errors.push({
+                message: 'The card expiry year must be a number between '+thisYear+' and 99',
+                group: 'payment'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($cvv.val())) {
+            errors.push({
+                message: 'You must provide the card CVV',
+                group: 'payment'
+            });
+        }
+        else if (!isNumeric($cvv.val()) || $cvv.val().length != 3) {
+            errors.push({
+                message: 'The CVV must be a number with 3 digits',
+                group: 'payment'
+            });
+        }
+
         return errors;
     }
 
@@ -364,6 +437,10 @@ $(function() {
         {
             group: 'delivery',
             $elm: $('#delivery-validation-errors')
+        },
+        {
+            group: 'payment',
+            $elm: $('#payment-validation-errors')
         }
     ];
 
