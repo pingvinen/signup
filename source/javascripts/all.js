@@ -81,6 +81,20 @@ $(function() {
         }
     }
 
+    function copyContactNameToDeliveryAndPayment() {
+        var $contactName = $form.find('#contact-name');
+        var $deliveryName = $form.find('#delivery-name');
+        var $paymentName = $form.find('#credit-card-name');
+
+        if ($deliveryName.val().length == 0) {
+            $deliveryName.val($contactName.val());
+        }
+
+        if ($paymentName.val().length == 0) {
+            $paymentName.val($contactName.val());
+        }
+    }
+
 
     /***************************************************************
      *
@@ -108,6 +122,10 @@ $(function() {
 
     $form.find('#port-number').on('blur', function() {
         copyPortNumberToContactPhone();
+    });
+
+    $form.find('#contact-name').on('blur', function() {
+        copyContactNameToDeliveryAndPayment();
     });
 
     $form.on('submit', function (){
