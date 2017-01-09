@@ -294,6 +294,56 @@ $(function() {
 
     function getDeliveryValidationErrors() {
         var errors = [];
+
+        var $name = $form.find('#delivery-name');
+        var $address = $form.find('#delivery-address');
+        var $address2 = $form.find('#delivery-address2');
+        var $area = $form.find('#delivery-area');
+        var $postal = $form.find('#delivery-postal');
+        var $state = $form.find('#delivery-state');
+
+        if (stringIsEmptyOrWhitespace($name.val())) {
+            errors.push({
+                message: 'You must provide a name',
+                group: 'delivery'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($address.val())) {
+            errors.push({
+                message: 'You must provide an address',
+                group: 'delivery'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($address2.val())) {
+            errors.push({
+                message: 'You must provide a floor, house name or similar',
+                group: 'delivery'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($area.val())) {
+            errors.push({
+                message: 'You must provide an area',
+                group: 'delivery'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($postal.val())) {
+            errors.push({
+                message: 'You must provide a postal code',
+                group: 'delivery'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($state.val())) {
+            errors.push({
+                message: 'You must provide a state',
+                group: 'delivery'
+            });
+        }
+
         return errors;
     }
 
@@ -310,6 +360,10 @@ $(function() {
         {
             group: 'contact',
             $elm: $('#contact-validation-errors')
+        },
+        {
+            group: 'delivery',
+            $elm: $('#delivery-validation-errors')
         }
     ];
 
