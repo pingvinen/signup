@@ -202,6 +202,20 @@ $(function() {
         return $.trim(input).replace(/ /g, '').match(/^(\+?52)?1?55\d{8}$/);
     }
 
+    function isEmailAddress(input) {
+        var cleaned = $.trim(input);
+        var parts = cleaned.split('@');
+
+        if (parts.length != 2) {
+            return false;
+        }
+
+        var usernameIsOk = parts[0].match(/^[a-z0-9_\.+]+$/i);
+        var domainIsOk = parts[1].match(/^[a-z0-9\._-]+\.[a-z]{2,}$/i);
+
+        return usernameIsOk && domainIsOk;
+    }
+
     function getNumberValidationErrors() {
         var errors = [];
 
@@ -238,6 +252,43 @@ $(function() {
 
     function getContactValidationErrors() {
         var errors = [];
+
+        var $name = $form.find('#contact-name');
+        var $phoneNumber = $form.find('#contact-phone');
+        var $email = $form.find('#contact-email');
+
+        if (stringIsEmptyOrWhitespace($name.val())) {
+            errors.push({
+                message: 'You must provide a name',
+                group: 'contact'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($phoneNumber.val())) {
+            errors.push({
+                message: 'You must provide a phone number',
+                group: 'contact'
+            });
+        }
+        else if (!isMexicanMobilePhoneNumber($phoneNumber.val())) {
+            errors.push({
+                message: 'The provided phone number does not seem to be valid',
+                group: 'contact'
+            });
+        }
+
+        if (stringIsEmptyOrWhitespace($email.val())) {
+            errors.push({
+                message: 'You must provide an email address',
+                group: 'contact'
+            });
+        } else if (!isEmailAddress($email.val())) {
+            errors.push({
+                message: 'The provided email address does not seem to be valid',
+                group: 'contact'
+            });
+        }
+
         return errors;
     }
 
@@ -255,6 +306,10 @@ $(function() {
         {
             group: 'number',
             $elm: $('#number-validation-errors')
+        },
+        {
+            group: 'contact',
+            $elm: $('#contact-validation-errors')
         }
     ];
 
