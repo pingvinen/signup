@@ -7,6 +7,7 @@ title: Signup to Simplii
     <h1>Sign up to Simplii</h1>
 
     <form id="signup-form" name="Signup" action="welcome" netlify>
+        <input type="hidden" id="plan-code" name="plan-code">
 
     <div class="form-wrapper col-sm-8">
       
@@ -163,9 +164,11 @@ title: Signup to Simplii
     <div class="sidebar" id="sidebar">
         <div class="box">
             <h3>Your order</h3>
+            <p id="sum-plan-name"></p>
             <p id="sum-contact-name"></p>
             <p id="sum-contact-phone"></p>
-            <p id="sum-contact-email"></p>  
+            <p id="sum-contact-email"></p>
+            <p id="sum-total"></p>
             <div class="form-group" id="submit">
                 <button type="submit" class="btn btn-primary">Sign up</button>
             </div>

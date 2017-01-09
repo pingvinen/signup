@@ -1,9 +1,14 @@
 //= require_tree .
 
-
 $(function() {
     var $form = $('#signup-form');
+    var $sidebar = $("#sidebar");
 
+    /***************************************************************
+     *
+     * Form related stuff
+     *
+     **************************************************************/
     function localStorageIsSupported() {
         return typeof(Storage) !== 'undefined';
     }
@@ -98,10 +103,75 @@ $(function() {
 
     /***************************************************************
      *
+     * Sidebar related stuff
+     *
+     **************************************************************/
+
+    var planRepository = [
+        {
+            code: 'small',
+            name: 'Small(TM)',
+            price: '111'
+        },
+        {
+            code: 'ninja',
+            name: 'Ninja Package',
+            price: '333'
+        }
+    ];
+
+    function getPlanCodeFromQueryString() {
+        var queryString = window.location.search.substr(1);
+
+        var result = null;
+        queryString.split('&').forEach(function(part) {
+            var item = part.split('=');
+            if (item[0] === 'plan') {
+                result = item[1];
+            }
+        });
+
+        return result;
+    }
+
+    function getPlan(planCode) {
+        var result = null;
+
+        planRepository.forEach(function(item) {
+            if (item.code === planCode) {
+                result = item;
+            }
+        });
+
+        return result;
+    }
+    
+    function updateSidebar() {
+        $sidebar.find('#sum-plan-name').text(plan.name);
+        $sidebar.find('#sum-contact-name').text($form.find('#contact-name').val());
+        $sidebar.find('#sum-contact-phone').text($form.find('#contact-phone').val());
+        $sidebar.find('#sum-contact-email').text($form.find('#contact-email').val());
+        $sidebar.find('#sum-total').text(plan.price);
+    }
+
+    var planCode = getPlanCodeFromQueryString();
+
+    var plan = getPlan(planCode);
+    if (plan !== null) {
+        $form.find('#plan-code').val(plan.code);
+    }
+
+
+
+
+    /***************************************************************
+     *
      * Start working
      *
      */
     prePopulateFormWithValuesFromLocalStorage();
+    updateSidebar();
+    $sidebar.sticky({topSpacing:30});
 
 
     /***************************************************************
@@ -114,25 +184,25 @@ $(function() {
      */
     $form.find(':input').on('keyup blur', function() {
         saveFormToLocalStorage();
+        updateSidebar();
     });
 
     $form.find(':radio').on('click', function() {
         saveFormToLocalStorage();
+        updateSidebar();
     });
 
     $form.find('#port-number').on('blur', function() {
         copyPortNumberToContactPhone();
+        updateSidebar();
     });
 
     $form.find('#contact-name').on('blur', function() {
         copyContactNameToDeliveryAndPayment();
+        updateSidebar();
     });
 
     $form.on('submit', function (){
         clearFormDataFromStorage();
     });
-});
-
-$(function() {
-	$("#sidebar").sticky({topSpacing:30});
 });
