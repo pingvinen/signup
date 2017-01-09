@@ -152,8 +152,150 @@ $(function() {
         $sidebar.find('#sum-contact-phone').text($form.find('#contact-phone').val());
         $sidebar.find('#sum-contact-email').text($form.find('#contact-email').val());
         $sidebar.find('#sum-total').text(plan.price);
+
+        var $submit = $('#submit-btn');
+        if (validate()) {
+            $submit.removeAttr('disabled');
+        } else {
+            $submit.attr('disabled', 'disabled');
+        }
     }
 
+    function validate() {
+        clearValidationErrors();
+        var validationErrors = getValidationErrors();
+
+        if (validationErrors.length != 0) {
+            showValidationErrors(validationErrors);
+            return false;
+        }
+
+        return true;
+    }
+
+    function submitForm(event) {
+        if (!validate()) {
+            event.preventDefault();
+            return false;
+        }
+        clearFormDataFromStorage();
+    }
+
+
+    /***************************************************************
+     *
+     * Validation
+     *
+     */
+    function stringIsEmptyOrWhitespace(str) {
+        return $.trim(str).length == 0;
+    }
+
+    function isMexicanMobilePhoneNumber(input) {
+        /**
+         * 52 = country code
+         * 1 = is mobile, only required if calling from outside Mexico (hence, optional)
+         * 55 = is mobile
+         * then 8 digits
+         */
+
+        return $.trim(input).replace(/ /g, '').match(/(\+?52)?1?55\d{8}/);
+    }
+
+    function getNumberValidationErrors() {
+        var errors = [];
+
+        var $numberPort = $form.find('[name=number-port]:checked');
+        var $portNumber = $form.find('#port-number');
+
+        if ($numberPort.length == 0) {
+            errors.push({
+                message: 'You must select whether to get a new number or keep an old one',
+                group: 'number'
+            });
+        }
+
+        else {
+            if ($numberPort.val() === 'number-port-true')
+            {
+                if (stringIsEmptyOrWhitespace($portNumber.val())) {
+                    errors.push({
+                        message: 'If you wish to keep your existing number, you must tell us what it is',
+                        group: 'number'
+                    });
+                }
+                else if (!isMexicanMobilePhoneNumber($portNumber.val())) {
+                    errors.push({
+                        message: 'The provided phone number does not seem to be valid',
+                        group: 'number'
+                    });
+                }
+            }
+        }
+
+        return errors;
+    }
+
+    function getContactValidationErrors() {
+        var errors = [];
+        return errors;
+    }
+
+    function getDeliveryValidationErrors() {
+        var errors = [];
+        return errors;
+    }
+
+    function getPaymentValidationErrors() {
+        var errors = [];
+        return errors;
+    }
+
+    var validationGroups = [
+        {
+            group: 'number',
+            $elm: $('#number-validation-errors')
+        }
+    ];
+
+    function getValidationErrors() {
+        return getNumberValidationErrors().concat(
+            getContactValidationErrors(),
+            getDeliveryValidationErrors(),
+            getPaymentValidationErrors()
+        );
+    }
+
+    function clearValidationErrors() {
+        validationGroups.forEach(function(group) {
+            group.$elm.empty();
+        });
+    }
+
+    function showValidationErrors(errors) {
+        errors.forEach(function (error) {
+            getValidationGroup(error.group).$elm.append(
+                $('<p></p>').text(error.message)
+            );
+        });
+    }
+
+    function getValidationGroup(groupName) {
+        var result = null;
+        validationGroups.forEach(function(group) {
+            if (group.group === groupName) {
+                result = group;
+            }
+        });
+        return result;
+    }
+
+
+    /***************************************************************
+     *
+     * The plan
+     *
+     */
     var planCode = getPlanCodeFromQueryString();
 
     var plan = getPlan(planCode);
@@ -202,7 +344,7 @@ $(function() {
         updateSidebar();
     });
 
-    $form.on('submit', function (){
-        clearFormDataFromStorage();
+    $form.on('submit', function (event) {
+        return submitForm(event);
     });
 });
