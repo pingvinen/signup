@@ -55,13 +55,19 @@ $(function() {
         if (localStorageIsSupported()) {
             var inLocal = getFormDataFromLocalStorage();
 
-            console.log(inLocal);
-
             if (inLocal != null) {
                 inLocal.forEach(function(item) {
                     var $elm = $($form.get(0)[item.name]);
-                    $elm.val(item.value);
+
+                    if (item.name === 'number-port') {
+                        $form.find('#'+item.value).attr('checked', true);
+                    }
+                    else {
+                        $elm.val(item.value);
+                    }
                 });
+
+
             }
         }
     }
@@ -83,7 +89,11 @@ $(function() {
      * in order to avoid triggering the save before all data is there.
      *
      */
-    $form.find(':input').on('keyup blur', function (event) {
+    $form.find(':input').on('keyup blur', function() {
+        saveFormToLocalStorage();
+    });
+
+    $form.find(':radio').on('click', function() {
         saveFormToLocalStorage();
     });
 
