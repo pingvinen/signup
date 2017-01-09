@@ -72,6 +72,15 @@ $(function() {
         }
     }
 
+    function copyPortNumberToContactPhone() {
+        var $portNumber = $form.find('#port-number');
+        var $contactNumber = $form.find('#contact-phone');
+
+        if ($contactNumber.val().length == 0) {
+            $contactNumber.val($portNumber.val());
+        }
+    }
+
 
     /***************************************************************
      *
@@ -95,6 +104,10 @@ $(function() {
 
     $form.find(':radio').on('click', function() {
         saveFormToLocalStorage();
+    });
+
+    $form.find('#port-number').on('blur', function() {
+        copyPortNumberToContactPhone();
     });
 
     $form.on('submit', function (){
