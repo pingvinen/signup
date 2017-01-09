@@ -137,16 +137,16 @@ title: Signup to Simplii
   
               <div class="row">
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">Exp. Month</label>
-                  <input class="form-control" type="number" lenght="2" placeholder="MM">
+                  <label for="exp-date-month">Exp. Month</label>
+                  <input id="exp-date-month" class="form-control" type="number" min="1" max="12" placeholder="MM">
                 </div>
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">Exp. Year</label>
-                  <input class="form-control" type="number" lenght="2" placeholder="YY">
+                  <label for="exp-date-year">Exp. Year</label>
+                  <input id="exp-date-year" class="form-control" type="number" min="17" max="99" maxlength="2" placeholder="YY">
                 </div>
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">CVV</label>
-                  <input class="form-control" type="number" lenght="3" placeholder="***">
+                  <label for="cc-cvv">CVV</label>
+                  <input id="cc-cvv" class="form-control" type="number" minlength="3" maxlength="4" placeholder="***">
                 </div>
               </div>
             </div>
