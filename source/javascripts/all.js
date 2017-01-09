@@ -1,27 +1,95 @@
 //= require_tree .
 
 
-
 $(function() {
-  	// Handler for .ready() called.
+    var $form = $('#signup-form');
 
-  	$("#port-number").change(function () {
-      var value = $(this).val();
-      $("#contact-phone").val(value);
-      $("#sum-contact-phone").text(value);
-    }).keyup();
+    function localStorageIsSupported() {
+        return typeof(Storage) !== 'undefined';
+    }
 
-    $("#contact-name").change(function () {
-      var value = $(this).val();
-      $("#delivery-name").val(value);
-      $("#credit-name").val(value);
-      $("#sum-contact-name").text(value);
-    }).keyup();
+    function getFormDataFromLocalStorage() {
+        if (localStorageIsSupported()) {
+            return JSON.parse(window.localStorage.getItem('signup-form-data'));
+        }
+    }
 
-    $("#contact-email").change(function () {
-      var value = $(this).val();
-      $("#sum-contact-email").text(value);
-    }).keyup();
+    function saveFormDataInLocalStorage(formData) {
+        if (localStorageIsSupported()) {
+            window.localStorage.setItem('signup-form-data', JSON.stringify(formData));
+        }
+    }
+
+    function clearFormDataFromStorage() {
+        if (localStorageIsSupported()) {
+            window.localStorage.removeItem('signup-form-data');
+        }
+    }
+
+    function saveFormToLocalStorage() {
+        if (localStorageIsSupported()) { // to avoid unnecessary work
+            var data = $form.serializeArray();
+
+            var namesNotAllowedToStore = [
+                'credit-card-name',
+                'credit-card-number',
+                'credit-card-exp-month',
+                'credit-card-exp-year',
+                'credit-card-cvv'
+            ];
+
+            // filter out fields that we are not allowed to store
+            data = data.filter(function(item) {
+                return namesNotAllowedToStore.indexOf(item.name) == -1;
+            });
+
+            saveFormDataInLocalStorage(data);
+        }
+    }
+
+    /**
+     * Pre-populates the form fields with values from
+     * local storage (if supported)
+     */
+    function prePopulateFormWithValuesFromLocalStorage() {
+        if (localStorageIsSupported()) {
+            var inLocal = getFormDataFromLocalStorage();
+
+            console.log(inLocal);
+
+            if (inLocal != null) {
+                inLocal.forEach(function(item) {
+                    var $elm = $($form.get(0)[item.name]);
+                    $elm.val(item.value);
+                });
+            }
+        }
+    }
+
+
+    /***************************************************************
+     *
+     * Start working
+     *
+     */
+    prePopulateFormWithValuesFromLocalStorage();
+
+
+    /***************************************************************
+     *
+     * Setup events for saving and clearing form data.
+     *
+     * We are setting up the "save on change" __after__ we pre-populate
+     * in order to avoid triggering the save before all data is there.
+     *
+     */
+    $form.find(':input').on('keyup blur', function (event) {
+        saveFormToLocalStorage();
+    });
+
+    $form.on('submit', function (){
+        clearFormDataFromStorage();
+    });
 });
 
 $(function() {
