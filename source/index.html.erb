@@ -190,4 +190,9 @@ title: Signup to Simplii
 </div>
 
 <script type="text/javascript"  src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
-<%= javascript_include_tag "payu.config.js", "payment.js", "signup.js" %>
+<% if development? %>
+    <%= javascript_include_tag "payu.config.development.js" %>
+<% else %>
+    <%= javascript_include_tag "payu.config.production.js" %>
+<% end %>
+<%= javascript_include_tag "payment.js", "signup.js" %>
