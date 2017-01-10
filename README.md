@@ -19,3 +19,11 @@ Generating the site
 ```
 bundle exec middleman build
 ```
+
+
+Running the site during development
+-----------------------------------
+
+```
+bundle exec middleman server
+```
