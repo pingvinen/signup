@@ -50,7 +50,9 @@
             return;
         }
 
-        promise.resolve({});
+        promise.resolve({
+            token: response.token
+        });
     };
 
     window.Payment = Payment;
