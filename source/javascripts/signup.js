@@ -35,23 +35,33 @@ $(function() {
 
     function saveFormToLocalStorage() {
         if (localStorageIsSupported()) { // to avoid unnecessary work
-            var data = $form.serializeArray();
-
-            var namesNotAllowedToStore = [
-                'credit-card-name',
-                'credit-card-number',
-                'credit-card-exp-month',
-                'credit-card-exp-year',
-                'credit-card-cvv'
-            ];
-
-            // filter out fields that we are not allowed to store
-            data = data.filter(function(item) {
-                return namesNotAllowedToStore.indexOf(item.name) == -1;
-            });
-
-            saveFormDataInLocalStorage(data);
+            saveFormDataInLocalStorage(getFormData());
         }
+    }
+
+    /**
+     * Get form data (as an array of objects {name:string, value:string}.
+     *
+     * It excludes credit card details.
+     * @returns {[]}
+     */
+    function getFormData() {
+        var data = $form.serializeArray();
+
+        var namesNotAllowedToStore = [
+            'credit-card-name',
+            'credit-card-number',
+            'credit-card-exp-month',
+            'credit-card-exp-year',
+            'credit-card-cvv'
+        ];
+
+        // filter out fields that we are not allowed to store
+        data = data.filter(function(item) {
+            return namesNotAllowedToStore.indexOf(item.name) == -1;
+        });
+
+        return data;
     }
 
     /**
@@ -184,10 +194,8 @@ $(function() {
     function checkPaymentInfo() {
         payment.createToken().then(
             function onResolved(data) {
-                console.log('yay... resolved', data);
                 $form.find('#payment-token').val(data.token);
-                // clearFormDataFromStorage()
-                // submit to netlify
+                weAreReadyForActualSubmit();
             },
 
             function onRejected(error) {
@@ -200,6 +208,25 @@ $(function() {
         getValidationGroup('payment').$elm.append(
             $('<p></p>').text(message)
         );
+    }
+
+    function populateNetlifyFormAndSubmit() {
+        var formData = getFormData();
+
+        var $netlify = $('#netlify-form');
+
+        formData.forEach(function(item) {
+            $netlify.append(
+                $('<input>').attr('type', 'hidden').attr('name', item.name).val(item.value)
+            )
+        });
+
+        $netlify.submit();
+    }
+
+    function weAreReadyForActualSubmit() {
+        clearFormDataFromStorage();
+        populateNetlifyFormAndSubmit();
     }
 
 
