@@ -6,7 +6,10 @@ title: Signup to Simplii
     
     <h1>Sign up to Simplii</h1>
 
-    <form id="signup-form" name="Signup" action="welcome" netlify>
+    <form id="netlify-form" name="Signup" action="welcome" netlify></form>
+
+    <form id="signup-form">
+        <input type="hidden" id="plan-code" name="plan-code">
 
     <div class="form-wrapper col-sm-8">
       
@@ -40,13 +43,13 @@ title: Signup to Simplii
           <div class="number-options">
             <div class="form-check">
               <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="number-port" id="number-port-false" value="number-port-false" checked>
+                    <input class="form-check-input" type="radio" name="number-port" id="number-port-false" value="number-port-false">
                   New number
                 </label>
             </div>
             <div class="form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" type="radio" name="number-port" id="number-port-true" value="number-port-true" checked>
+                    <input class="form-check-input" type="radio" name="number-port" id="number-port-true" value="number-port-true">
                   Transfer number
                 </label>
               </div>
@@ -55,6 +58,7 @@ title: Signup to Simplii
             <label>Your number to be transfered</label>
             <input class="form-control" type="tel" name="port-number" id="port-number" />
           </div>
+            <div class="validation-errors" id="number-validation-errors"></div>
         </div>
       
         <div class="form-group box" id="contact">
@@ -75,7 +79,8 @@ title: Signup to Simplii
             <input type="email" class="form-control" id="contact-email" name="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We promise not to share your email with anyone else and will only send you occational informational emails.</small>
           </div>
-  
+
+            <div class="validation-errors" id="contact-validation-errors"></div>
         </div>
   
 
@@ -118,6 +123,8 @@ title: Signup to Simplii
                 <label for="delivery-instructions">Special delivery instructions</label>
                 <textarea class="form-control" id="delivery-instructions" name="delivery-instructions" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
             </div>
+
+            <div class="validation-errors" id="delivery-validation-errors"></div>
         </div>
 
         <div class="form-group box" id="payment">
@@ -125,33 +132,38 @@ title: Signup to Simplii
 
           <div class="row">
             <div class="form-group col-sm-7" id="creditcard">
+
+            <div style="display: none" id="credit-card-listbox"></div>
   
             <div class="form-group">
-                <label for="credit-name">Name on card</label>
-                <input type="text" class="form-control" id="credit-name" placeholder="Enter your name">
+                <label for="credit-card-name">Name on card</label>
+                <input type="text" class="form-control" id="credit-card-name" payu-content="name_card" placeholder="Enter your name">
               </div>
               <div class="form-group">
                 <label for="credit-card-number">Credit card number</label>
-                <input type="number" class="form-control" id="credit-card-number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
+                <input type="number" class="form-control" id="credit-card-number" payu-content="number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
               </div>
   
               <div class="row">
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">Exp. Month</label>
-                  <input class="form-control" type="number" lenght="2" placeholder="MM">
+                  <label for="credit-card-exp-month">Exp. Month</label>
+                  <input name="credit-card-exp-month" id="credit-card-exp-month" payu-content="exp_month" class="form-control" type="number" min="1" max="12" placeholder="MM">
                 </div>
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">Exp. Year</label>
-                  <input class="form-control" type="number" lenght="2" placeholder="YY">
+                  <label for="credit-card-exp-year">Exp. Year</label>
+                  <input name="credit-card-exp-year" id="credit-card-exp-year" payu-content="exp_year" class="form-control" type="number" min="17" max="99" maxlength="2" placeholder="YY">
                 </div>
                 <div class="form-group col-sm-4">
-                  <label for="exp-date">CVV</label>
-                  <input class="form-control" type="number" lenght="3" placeholder="***">
+                  <label for="credit-card-cvv">CVV</label>
+                  <input name="credit-card-cvv" id="credit-card-cvv" payu-content="cvc" class="form-control" type="number" minlength="3" maxlength="4" placeholder="***">
                 </div>
               </div>
             </div>
           </div>
+            <input payu-content="payer_id" value="MI PAYER ID" type="hidden">
           <input type="hidden" name="payment-token" id="payment-token">
+
+            <div class="validation-errors" id="payment-validation-errors"></div>
         </div>
 
         
@@ -163,14 +175,24 @@ title: Signup to Simplii
     <div class="sidebar" id="sidebar">
         <div class="box">
             <h3>Your order</h3>
+            <p id="sum-plan-name"></p>
             <p id="sum-contact-name"></p>
             <p id="sum-contact-phone"></p>
-            <p id="sum-contact-email"></p>  
+            <p id="sum-contact-email"></p>
+            <p id="sum-total"></p>
             <div class="form-group" id="submit">
-                <button type="submit" class="btn btn-primary">Sign up</button>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Sign up</button>
             </div>
         </div>
         <p>Call us now if you want help signing up.</p>
     </div>
     </form>
 </div>
+
+<script type="text/javascript"  src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
+<% if development? %>
+    <%= javascript_include_tag "payu.config.development.js" %>
+<% else %>
+    <%= javascript_include_tag "payu.config.production.js" %>
+<% end %>
+<%= javascript_include_tag "payment.js", "signup.js" %>

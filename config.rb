@@ -23,6 +23,8 @@ activate :directory_indexes
 # Reload the browser automatically whenever files change
 configure :development do
   activate :livereload
+
+  ignore 'javascripts/payu.config.production.js'
 end
 
 ###
@@ -43,4 +45,8 @@ configure :build do
 
   # Minify Javascript on build
   # activate :minify_javascript
+
+  ignore 'javascripts/payu.config.development.js'
+
+  activate :asset_hash
 end
