@@ -6,7 +6,7 @@ title: Signup to Simplii
     
     <h1>Sign up to Simplii</h1>
 
-    <form id="signup-form" name="Signup" action="welcome" netlify>
+    <form id="signup-form" name="Signup" netlify>
         <input type="hidden" id="plan-code" name="plan-code">
 
     <div class="form-wrapper col-sm-8">
@@ -130,32 +130,35 @@ title: Signup to Simplii
 
           <div class="row">
             <div class="form-group col-sm-7" id="creditcard">
+
+            <div style="display: none" id="credit-card-listbox"></div>
   
             <div class="form-group">
                 <label for="credit-card-name">Name on card</label>
-                <input type="text" class="form-control" id="credit-card-name" placeholder="Enter your name">
+                <input type="text" class="form-control" id="credit-card-name" payu-content="name_card" placeholder="Enter your name">
               </div>
               <div class="form-group">
                 <label for="credit-card-number">Credit card number</label>
-                <input type="number" class="form-control" id="credit-card-number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
+                <input type="number" class="form-control" id="credit-card-number" payu-content="number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
               </div>
   
               <div class="row">
                 <div class="form-group col-sm-4">
                   <label for="credit-card-exp-month">Exp. Month</label>
-                  <input name="credit-card-exp-month" id="credit-card-exp-month" class="form-control" type="number" min="1" max="12" placeholder="MM">
+                  <input name="credit-card-exp-month" id="credit-card-exp-month" payu-content="exp_month" class="form-control" type="number" min="1" max="12" placeholder="MM">
                 </div>
                 <div class="form-group col-sm-4">
                   <label for="credit-card-exp-year">Exp. Year</label>
-                  <input name="credit-card-exp-year" id="credit-card-exp-year" class="form-control" type="number" min="17" max="99" maxlength="2" placeholder="YY">
+                  <input name="credit-card-exp-year" id="credit-card-exp-year" payu-content="exp_year" class="form-control" type="number" min="17" max="99" maxlength="2" placeholder="YY">
                 </div>
                 <div class="form-group col-sm-4">
                   <label for="credit-card-cvv">CVV</label>
-                  <input name="credit-card-cvv" id="credit-card-cvv" class="form-control" type="number" minlength="3" maxlength="4" placeholder="***">
+                  <input name="credit-card-cvv" id="credit-card-cvv" payu-content="cvc" class="form-control" type="number" minlength="3" maxlength="4" placeholder="***">
                 </div>
               </div>
             </div>
           </div>
+            <input payu-content="payer_id" value="MI PAYER ID" type="hidden">
           <input type="hidden" name="payment-token" id="payment-token">
 
             <div class="validation-errors" id="payment-validation-errors"></div>
@@ -183,3 +186,6 @@ title: Signup to Simplii
     </div>
     </form>
 </div>
+
+<script type="text/javascript"  src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
+<%= javascript_include_tag "payu.config.js", "payment.js" %>

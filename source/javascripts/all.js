@@ -3,6 +3,8 @@
 $(function() {
     var $form = $('#signup-form');
     var $sidebar = $("#sidebar");
+    var payment = new Payment($form, 'credit-card-listbox', window.payuConfig);
+    payment.initialize();
 
     /***************************************************************
      *
@@ -173,12 +175,31 @@ $(function() {
         return true;
     }
 
-    function submitForm(event) {
-        if (!validate()) {
-            event.preventDefault();
-            return false;
+    function submitForm() {
+        if (validate()) {
+            checkPaymentInfo();
         }
-        clearFormDataFromStorage();
+    }
+    
+    function checkPaymentInfo() {
+        payment.createToken().then(
+            function onResolved(data) {
+                console.log('yay... resolved', data);
+                $form.find('#payment-token').val(data.token);
+                // clearFormDataFromStorage()
+                // submit to netlify
+            },
+
+            function onRejected(error) {
+                addPaymentError(error);
+            }
+        );
+    }
+
+    function addPaymentError(message) {
+        getValidationGroup('payment').$elm.append(
+            $('<p></p>').text(message)
+        );
     }
 
 
@@ -531,6 +552,8 @@ $(function() {
     });
 
     $form.on('submit', function (event) {
-        return submitForm(event);
+        event.preventDefault();
+        submitForm();
+        return false;
     });
 });
