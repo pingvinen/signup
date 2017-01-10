@@ -89,6 +89,14 @@ $(function() {
         }
     }
 
+    function enableSubmitButton() {
+        $('#submit-btn').removeAttr('disabled');
+    }
+
+    function disableSubmitButton() {
+        $('#submit-btn').attr('disabled', 'disabled');
+    }
+
     function copyPortNumberToContactPhone() {
         var $portNumber = $form.find('#port-number');
         var $contactNumber = $form.find('#contact-phone');
@@ -165,11 +173,10 @@ $(function() {
         $sidebar.find('#sum-contact-email').text($form.find('#contact-email').val());
         $sidebar.find('#sum-total').text(plan.price);
 
-        var $submit = $('#submit-btn');
         if (validate()) {
-            $submit.removeAttr('disabled');
+            enableSubmitButton();
         } else {
-            $submit.attr('disabled', 'disabled');
+            disableSubmitButton();
         }
     }
 
@@ -186,6 +193,8 @@ $(function() {
     }
 
     function submitForm() {
+        disableSubmitButton(); // to prevent multiple submits
+
         if (validate()) {
             checkPaymentInfo();
         }
@@ -200,6 +209,7 @@ $(function() {
 
             function onRejected(error) {
                 addPaymentError(error);
+                enableSubmitButton();
             }
         );
     }
@@ -227,6 +237,7 @@ $(function() {
     function weAreReadyForActualSubmit() {
         clearFormDataFromStorage();
         populateNetlifyFormAndSubmit();
+        enableSubmitButton();
     }
 
 
