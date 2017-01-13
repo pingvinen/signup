@@ -22,7 +22,7 @@ activate :directory_indexes
 
 # Reload the browser automatically whenever files change
 configure :development do
-  activate :livereload
+  # activate :livereload
 
   ignore 'javascripts/payu.config.production.js'
 end
