@@ -50,6 +50,14 @@ h3 {
 	display: none;
 }
 
+.invalid {
+	border-color: #f00;
+}
+
+.invalid-section {
+	border-color: #f00;
+}
+
 
 
 

@@ -71,7 +71,7 @@
              */
             onValidate: function defaultOnValidate($form) { return []; },
 
-            onSubmit: function defaultSubmit() { }
+            onSubmit: function defaultSubmit(section) { }
         },
 
         _create: function _create() {
@@ -82,6 +82,7 @@
             this.$next = this.element.find('.next-btn');
             this.$form = this.element.find('form');
             this.$validationErrors = this.element.find('.validation-errors');
+            this.$collapsable = this.element.find('.inner');
 
             this.$form.on('submit', $.proxy(this._onSubmit, this));
             this.$form.find(':input').on('keyup blur', $.proxy(this._onChange, this));
@@ -132,8 +133,10 @@
             var isValid = errors.length == 0;
 
             if (isValid) {
+                this.element.removeClass('invalid-section');
                 this._enableNext();
             } else {
+                this.element.addClass('invalid-section');
                 this._disableNext();
             }
 
@@ -148,7 +151,7 @@
 
         _onSubmit: function _onSubmit(event) {
             event.preventDefault();
-            this.options.onSubmit();
+            this.options.onSubmit(this.element);
         },
 
         save: function save() {
@@ -176,6 +179,24 @@
             }
 
             return [];
+        },
+
+        collapse: function collapse() {
+            this.$collapsable.removeClass('expanded').addClass('collapsed');
+        },
+
+        expandAndFocus: function expandAndFocus() {
+            this.$collapsable.removeClass('collapsed').addClass('expanded');
+
+            if (this.element.hasClass('invalid-section')) {
+                this.$form.find('.invalid').first().focus();
+            } else {
+                this.$form.find(':input').first().focus();
+            }
+        },
+
+        getId: function getId() {
+            return this.id;
         }
     });
 

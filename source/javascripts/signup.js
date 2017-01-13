@@ -51,6 +51,7 @@ $(function() {
 
     function getNumberValidationErrors($form) {
         var errors = [];
+        $form.find('.invalid').removeClass('invalid');
 
         var $numberPort = $form.find('[name=number-port]:checked');
         var $portNumber = $form.find('#port-number');
@@ -64,9 +65,11 @@ $(function() {
             {
                 if (stringIsEmptyOrWhitespace($portNumber.val())) {
                     errors.push('If you wish to keep your existing number, you must tell us what it is');
+                    $portNumber.addClass('invalid');
                 }
                 else if (!isMexicanMobilePhoneNumber($portNumber.val())) {
                     errors.push('The provided phone number does not seem to be valid');
+                    $portNumber.addClass('invalid');
                 }
             }
         }
@@ -76,6 +79,7 @@ $(function() {
 
     function getContactValidationErrors($form) {
         var errors = [];
+        $form.find('.invalid').removeClass('invalid');
 
         var $name = $form.find('#contact-name');
         var $phoneNumber = $form.find('#contact-phone');
@@ -83,19 +87,24 @@ $(function() {
 
         if (stringIsEmptyOrWhitespace($name.val())) {
             errors.push('You must provide a name');
+            $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($phoneNumber.val())) {
             errors.push('You must provide a phone number');
+            $phoneNumber.addClass('invalid');
         }
         else if (!isMexicanMobilePhoneNumber($phoneNumber.val())) {
             errors.push('The provided phone number does not seem to be valid');
+            $phoneNumber.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($email.val())) {
             errors.push('You must provide an email address');
+            $email.addClass('invalid');
         } else if (!isEmailAddress($email.val())) {
             errors.push('The provided email address does not seem to be valid');
+            $email.addClass('invalid');
         }
 
         return errors;
@@ -103,6 +112,7 @@ $(function() {
 
     function getDeliveryValidationErrors($form) {
         var errors = [];
+        $form.find('.invalid').removeClass('invalid');
 
         var $name = $form.find('#delivery-name');
         var $address = $form.find('#delivery-address');
@@ -113,26 +123,32 @@ $(function() {
 
         if (stringIsEmptyOrWhitespace($name.val())) {
             errors.push('You must provide a name');
+            $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($address.val())) {
             errors.push('You must provide an address');
+            $address.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($address2.val())) {
             errors.push('You must provide a floor, house name or similar');
+            $address2.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($area.val())) {
             errors.push('You must provide an area');
+            $area.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($postal.val())) {
             errors.push('You must provide a postal code');
+            $postal.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($state.val())) {
             errors.push('You must provide a state');
+            $state.addClass('invalid');
         }
 
         return errors;
@@ -140,6 +156,7 @@ $(function() {
 
     function getPaymentValidationErrors($form) {
         var errors = [];
+        $form.find('.invalid').removeClass('invalid');
 
         var $name = $form.find('#credit-card-name');
         var $pan = $form.find('#credit-card-number');
@@ -149,35 +166,44 @@ $(function() {
 
         if (stringIsEmptyOrWhitespace($name.val())) {
             errors.push('You must provide the card holder name');
+            $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($pan.val())) {
             errors.push('You must provide card number');
+            $pan.addClass('invalid');
         }
         else if (!isNumeric($pan.val()) || $pan.val().length < 16) {
             errors.push('The card number must be numbers only and a minimum of 16 digits');
+            $pan.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($expMonth.val())) {
             errors.push('You must provide the card expiry month');
+            $expMonth.addClass('invalid');
         }
         else if (!isNumeric($expMonth.val()) || $expMonth.val() < 1 || $expMonth.val() > 12) {
             errors.push('The card expiry month must be a number between 1 and 12');
+            $expMonth.addClass('invalid');
         }
 
         var thisYear = (new Date()).getFullYear() - 2000;
         if (stringIsEmptyOrWhitespace($expYear.val())) {
             errors.push('You must provide the card expiry year');
+            $expYear.addClass('invalid');
         }
         else if (!isNumeric($expYear.val()) || $expYear.val() < thisYear || $expYear.val() > 99) {
             errors.push('The card expiry year must be a number between '+thisYear+' and 99');
+            $expYear.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($cvv.val())) {
             errors.push('You must provide the card CVV');
+            $cvv.addClass('invalid');
         }
         else if (!isNumeric($cvv.val()) || $cvv.val().length != 3) {
             errors.push('The CVV must be a number with 3 digits');
+            $cvv.addClass('invalid');
         }
 
         return errors;
@@ -320,6 +346,7 @@ $(function() {
         // validate sections
         var allSectionsAreValid = true;
 
+
         sections.forEach(function(section) {
             allSectionsAreValid &= section.signupsection('isValid');
         });
@@ -335,8 +362,19 @@ $(function() {
 
 
 
-    function onSubmit() {
+    function onSubmit(section) {
         onChange();
+
+        if (section && section.signupsection('isValid')) {
+            // go to next section
+            var next = nextSectionMap[section.signupsection('getId')];
+
+            if (next) {
+                section.signupsection('collapse');
+                next.signupsection('expandAndFocus');
+            }
+        }
+
         disableSubmitButton();
         checkPaymentInfo();
     }
@@ -376,6 +414,13 @@ $(function() {
         paymentSection
     ];
 
+    var nextSectionMap = {
+        'number': contactSection,
+        'contact': deliverySection,
+        'delivery': paymentSection,
+        'payment': null
+    };
+
 
     /***************************************************************
      * Start the page
@@ -389,6 +434,15 @@ $(function() {
 
     sections.forEach(function(section) {
         section.signupsection('prePopulate');
+    });
+
+    // expand first invalid section
+    var doCheck = true;
+    sections.forEach(function(section) {
+        if (doCheck && !section.signupsection('isValid')) {
+            section.signupsection('expandAndFocus');
+            doCheck = false;
+        }
     });
 
     $submitBtn.on('click', onSubmit);
