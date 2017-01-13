@@ -252,6 +252,50 @@ $(function() {
     }
 
 
+    /***************************************************************
+     * Plan
+     */
+
+    var planRepository = [
+        {
+            code: 'small',
+            name: 'Small(TM)',
+            price: '111'
+        },
+        {
+            code: 'ninja',
+            name: 'Ninja Package',
+            price: '333'
+        }
+    ];
+
+    function getPlanCodeFromQueryString() {
+        var queryString = window.location.search.substr(1);
+
+        var result = null;
+        queryString.split('&').forEach(function(part) {
+            var item = part.split('=');
+            if (item[0] === 'plan') {
+                result = item[1];
+            }
+        });
+
+        return result;
+    }
+
+    function getPlan(planCode) {
+        var result = null;
+
+        planRepository.forEach(function(item) {
+            if (item.code === planCode) {
+                result = item;
+            }
+        });
+
+        return result;
+    }
+
+
 
 
     /***************************************************************
@@ -325,4 +369,11 @@ $(function() {
     });
 
     $submitBtn.on('click', onSubmit);
+
+    var planCode = getPlanCodeFromQueryString();
+
+    var plan = getPlan(planCode);
+    if (plan !== null) {
+        $form.find('#plan-code').val(plan.code);
+    }
 });
