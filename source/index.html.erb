@@ -10,10 +10,12 @@ title: Signup to Simplii
 
     <form id="signup-form">
         <input type="hidden" id="plan-code" name="plan-code">
+    </form>
 
     <div class="form-wrapper col-sm-8">
       
         <div class="form-group box" id="number">
+            <form>
           <h2>0 - Number</h2>
           <div class="inner expanded">
             <div class="number-options">
@@ -36,11 +38,13 @@ title: Signup to Simplii
           </div>
             <div class="validation-errors" id="number-validation-errors"></div>
 
-          <button type="button" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
+          <button type="submit" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
           </div>
+            </form>
         </div>
       
         <div class="form-group box" id="contact">
+            <form>
           <h2>1 - Contact</h2>
           <div class="inner expanded">
             <div class="form-group">
@@ -64,10 +68,12 @@ title: Signup to Simplii
 
             <button type="button" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
           </div>
+            </form>
         </div>
   
 
         <div class="form-group box" id="delivery">
+            <form>
           <h2>2 - Delivery</h2>
           <div class="inner expanded">
             <div class="form-group">
@@ -112,9 +118,11 @@ title: Signup to Simplii
 
             <button type="button" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
           </div>
+            </form>
         </div>
 
         <div class="form-group box" id="payment">
+            <form>
           <h2>3 - Payment</h2>
 
           <div class="inner expanded">
@@ -154,6 +162,7 @@ title: Signup to Simplii
             <div class="validation-errors" id="payment-validation-errors"></div>
 
           </div>
+            </form>
         </div>
 
         
@@ -176,7 +185,6 @@ title: Signup to Simplii
         </div>
         <p>Call us now if you want help signing up.</p>
     </div>
-    </form>
 </div>
 
 <script type="text/javascript"  src="https://gateway.payulatam.com/ppp-web-gateway/javascript/PayU.js"></script>
@@ -185,4 +193,4 @@ title: Signup to Simplii
 <% else %>
     <%= javascript_include_tag "payu.config.production.js" %>
 <% end %>
-<%= javascript_include_tag "payment.js", "signup.js" %>
+<%= javascript_include_tag "jquery-ui-1.12.1.core-only.min.js", "signup-section.widget.js", "payment.js", "signup.js" %>
