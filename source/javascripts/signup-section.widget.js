@@ -97,8 +97,29 @@
         },
 
         _onChange: function _onChange() {
+            this._numberSection_onChange();
+
             this.save();
             this.options.onChange();
+        },
+
+        /**
+         * This is very EEEWWW! This kind of section specific stuff
+         * does not belong in a generic section handler, but I am pressed
+         * for time... sorry programming gods...
+         * @private
+         */
+        _numberSection_onChange: function _numberSection_onChange() {
+            if (this.id === 'number') {
+                var $numberPort = this.$form.find('[name=number-port]:checked');
+                var $portNumber = this.$form.find('#port-number');
+
+                if ($numberPort.val() === 'number-port-true') {
+                    $portNumber.removeAttr('disabled');
+                } else {
+                    $portNumber.attr('disabled', 'disabled').val('');
+                }
+            }
         },
 
         isValid: function isValid() {
@@ -139,6 +160,7 @@
         prePopulate: function prePopulate() {
             if (this.options.isSaveable) {
                 prePopulateFormWithValuesFromLocalStorage(this.$form, this.localStorageItemKey);
+                this._onChange();
             }
         },
 

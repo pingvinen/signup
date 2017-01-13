@@ -325,7 +325,4 @@ $(function() {
     });
 
     $submitBtn.on('click', onSubmit);
-
-    // make sure validation etc has run
-    onChange();
 });
