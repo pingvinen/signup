@@ -296,6 +296,20 @@ $(function() {
     }
 
 
+    /***************************************************************
+     * Sidebar
+     */
+
+    function updateSidebar() {
+        contactSection.signupsection('getData').forEach(function(item) {
+            $sidebar.find('#sum-'+item.name).text(item.value);
+        });
+
+        $sidebar.find('#sum-plan-name').text(plan.name);
+        $sidebar.find('#sum-total').text(plan.price);
+    }
+
+
 
 
     /***************************************************************
@@ -315,6 +329,8 @@ $(function() {
         } else {
             disableSubmitButton();
         }
+
+        updateSidebar();
     }
 
 
@@ -362,18 +378,18 @@ $(function() {
 
 
     /***************************************************************
-     * Pre-populate sections
+     * Start the page
      */
-    sections.forEach(function(section) {
-        section.signupsection('prePopulate');
-    });
-
-    $submitBtn.on('click', onSubmit);
-
     var planCode = getPlanCodeFromQueryString();
 
     var plan = getPlan(planCode);
     if (plan !== null) {
         $form.find('#plan-code').val(plan.code);
     }
+
+    sections.forEach(function(section) {
+        section.signupsection('prePopulate');
+    });
+
+    $submitBtn.on('click', onSubmit);
 });
