@@ -22,6 +22,12 @@
         }
     }
 
+    function clearFormDataFromStorage(localStorageItemKey) {
+        if (localStorageIsSupported()) {
+            window.localStorage.removeItem(localStorageItemKey);
+        }
+    }
+
     /**
      * Pre-populates the form fields with values from
      * local storage (if supported)
@@ -57,13 +63,15 @@
 
         options: {
             isSaveable: true,
-            onChange: function defaultOnChange(section) { },
+            onChange: function defaultOnChange() { },
 
             /**
              * This function should perform validation and
              * return an array of error messages
              */
-            onValidate: function defaultOnValidate($form) { return []; }
+            onValidate: function defaultOnValidate($form) { return []; },
+
+            onSubmit: function defaultSubmit() { }
         },
 
         _create: function _create() {
@@ -90,7 +98,7 @@
 
         _onChange: function _onChange() {
             this.save();
-            this.options.onChange(this.element);
+            this.options.onChange();
         },
 
         isValid: function isValid() {
@@ -98,12 +106,7 @@
 
             var errors = this.options.onValidate(this.$form);
 
-            var output = this.$validationErrors;
-            errors.forEach(function(error) {
-                output.append(
-                    $('<p></p>').text(error)
-                );
-            });
+            errors.forEach($.proxy(this.addError, this));
 
             var isValid = errors.length == 0;
 
@@ -116,8 +119,15 @@
             return isValid;
         },
 
+        addError: function addError(errorMessage) {
+            this.$validationErrors.append(
+                $('<p></p>').text(errorMessage)
+            );
+        },
+
         _onSubmit: function _onSubmit(event) {
             event.preventDefault();
+            this.options.onSubmit();
         },
 
         save: function save() {
@@ -130,6 +140,20 @@
             if (this.options.isSaveable) {
                 prePopulateFormWithValuesFromLocalStorage(this.$form, this.localStorageItemKey);
             }
+        },
+
+        clearStorage: function clearStorage() {
+            if (this.options.isSaveable) {
+                clearFormDataFromStorage(this.localStorageItemKey);
+            }
+        },
+
+        getData: function getData() {
+            if (this.options.isSaveable) {
+                return getFormData(this.$form);
+            }
+
+            return [];
         }
     });
 

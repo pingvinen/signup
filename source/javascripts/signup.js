@@ -3,7 +3,9 @@
 $(function() {
     var $form = $('#signup-form');
     var $sidebar = $("#sidebar");
-    var payment = new Payment($form, 'credit-card-listbox', window.payuConfig);
+    var $submitBtn = $('#submit-btn');
+    var $paymentForm = $('#payment').find('form');
+    var payment = new Payment($paymentForm, 'credit-card-listbox', window.payuConfig);
     payment.initialize();
 
 
@@ -182,14 +184,79 @@ $(function() {
     }
 
     function enableSubmitButton() {
-        $('#submit-btn').removeAttr('disabled');
+        $submitBtn.removeAttr('disabled');
     }
 
     function disableSubmitButton() {
-        $('#submit-btn').attr('disabled', 'disabled');
+        $submitBtn.attr('disabled', 'disabled');
+    }
+
+    function checkPaymentInfo() {
+        payment.createToken().then(
+            function onResolved(data) {
+                $form.find('#payment-token').val(data.token);
+                weAreReadyForActualSubmit();
+            },
+
+            function onRejected(error) {
+                paymentSection.signupsection('addError', error);
+                enableSubmitButton();
+            }
+        );
+    }
+
+    function weAreReadyForActualSubmit() {
+        clearFormDataFromStorage();
+        populateNetlifyFormAndSubmit();
+        enableSubmitButton();
+    }
+
+    function clearFormDataFromStorage() {
+        sections.forEach(function(section) {
+            section.signupsection('clearStorage');
+        });
+    }
+
+    function populateNetlifyFormAndSubmit() {
+        var $netlify = $('#netlify-form');
+
+        $netlify.empty();
+
+        var data = [];
+
+        // copy fields that are stored on the signup-form
+        $form.find(':input').each(function(i, elm) {
+            var $elm = $(elm);
+
+            data.push({
+                name: $elm.attr('name'),
+                value: $elm.val()
+            })
+        });
+
+        // copy fields from each section
+        sections.forEach(function(section) {
+            data = data.concat(section.signupsection('getData'));
+        });
+
+
+        // make the fields son the netlify form
+        data.forEach(function (item) {
+            $netlify.append(
+                $('<input>').attr('type', 'hidden').attr('name', item.name).val(item.value)
+            )
+        });
+
+
+        $netlify.submit();
     }
 
 
+
+
+    /***************************************************************
+     * Event handlers
+     */
 
     function onChange() {
         // validate sections
@@ -208,21 +275,37 @@ $(function() {
 
 
 
+    function onSubmit() {
+        onChange();
+        disableSubmitButton();
+        checkPaymentInfo();
+    }
+
+
+
+
+    /***************************************************************
+     * Define sections
+     */
     var numberSection = $('#number').signupsection({
         onChange: onChange,
-        onValidate: getNumberValidationErrors
+        onValidate: getNumberValidationErrors,
+        onSubmit: onSubmit
     });
     var contactSection = $('#contact').signupsection({
         onChange: onChange,
-        onValidate: getContactValidationErrors
+        onValidate: getContactValidationErrors,
+        onSubmit: onSubmit
     });
     var deliverySection = $('#delivery').signupsection({
         onChange: onChange,
-        onValidate: getDeliveryValidationErrors
+        onValidate: getDeliveryValidationErrors,
+        onSubmit: onSubmit
     });
     var paymentSection = $('#payment').signupsection({
         onChange: onChange,
         onValidate: getPaymentValidationErrors,
+        onSubmit: onSubmit,
         isSaveable: false
     });
 
@@ -240,4 +323,9 @@ $(function() {
     sections.forEach(function(section) {
         section.signupsection('prePopulate');
     });
+
+    $submitBtn.on('click', onSubmit);
+
+    // make sure validation etc has run
+    onChange();
 });

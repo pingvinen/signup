@@ -10,6 +10,7 @@ title: Signup to Simplii
 
     <form id="signup-form">
         <input type="hidden" id="plan-code" name="plan-code">
+        <input type="hidden" name="payment-token" id="payment-token">
     </form>
 
     <div class="form-wrapper col-sm-8">
@@ -38,7 +39,7 @@ title: Signup to Simplii
           </div>
             <div class="validation-errors" id="number-validation-errors"></div>
 
-          <button type="submit" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
+          <button type="submit" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
         </div>
@@ -66,7 +67,7 @@ title: Signup to Simplii
 
             <div class="validation-errors" id="contact-validation-errors"></div>
 
-            <button type="button" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
+            <button type="button" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
         </div>
@@ -116,7 +117,7 @@ title: Signup to Simplii
 
             <div class="validation-errors" id="delivery-validation-errors"></div>
 
-            <button type="button" class="btn btn-primary next-btn" id="port-next-btn">Next</button>
+            <button type="button" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
         </div>
@@ -157,10 +158,9 @@ title: Signup to Simplii
             </div>
           </div>
             <input payu-content="payer_id" value="MI PAYER ID" type="hidden">
-          <input type="hidden" name="payment-token" id="payment-token">
-
             <div class="validation-errors" id="payment-validation-errors"></div>
 
+              <button type="submit" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
         </div>
