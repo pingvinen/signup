@@ -57,7 +57,13 @@
 
         options: {
             isSaveable: true,
-            onChange: function defaultOnChange() { }
+            onChange: function defaultOnChange(section) { },
+
+            /**
+             * This function should perform validation and
+             * return an array of error messages
+             */
+            onValidate: function defaultOnValidate($form) { return []; }
         },
 
         _create: function _create() {
@@ -67,23 +73,51 @@
 
             this.$next = this.element.find('.next-btn');
             this.$form = this.element.find('form');
+            this.$validationErrors = this.element.find('.validation-errors');
 
             this.$form.on('submit', $.proxy(this._onSubmit, this));
             this.$form.find(':input').on('keyup blur', $.proxy(this._onChange, this));
             this.$form.find(':radio').on('click', $.proxy(this._onChange, this));
         },
 
-        _onChange: function _onChange() {
-            this.save();
-            this.options.onChange();
+        _enableNext: function _enableNext() {
+            this.$next.removeAttr('disabled');
         },
 
-        _validate: function _validate() {
+        _disableNext: function _disableNext() {
+            this.$next.attr('disabled', 'disabled');
+        },
+
+        _onChange: function _onChange() {
+            this.save();
+            this.options.onChange(this.element);
+        },
+
+        isValid: function isValid() {
+            this.$validationErrors.empty();
+
+            var errors = this.options.onValidate(this.$form);
+
+            var output = this.$validationErrors;
+            errors.forEach(function(error) {
+                output.append(
+                    $('<p></p>').text(error)
+                );
+            });
+
+            var isValid = errors.length == 0;
+
+            if (isValid) {
+                this._enableNext();
+            } else {
+                this._disableNext();
+            }
+
+            return isValid;
         },
 
         _onSubmit: function _onSubmit(event) {
             event.preventDefault();
-            this._validate();
         },
 
         save: function save() {
