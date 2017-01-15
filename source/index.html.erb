@@ -13,9 +13,9 @@ title: Signup to Simplii
 
     <div class="form-wrapper col-sm-8">
       
-        <div class="form-group box" id="number">
-          <h2>0 - Number</h2>
-          <div class="inner expanded">
+        <div class="form-group box completed" id="number">
+          <h2><span>1</span> Phone number</h2>
+          <div class="inner collapsed">
             <div class="number-options">
             <div class="form-check">
               <label class="form-check-label">
@@ -40,16 +40,16 @@ title: Signup to Simplii
           </div>
         </div>
       
-        <div class="form-group box" id="contact">
-          <h2>1 - Contact</h2>
-          <div class="inner expanded">
+        <div class="form-group box completed" id="contact">
+          <h2><span>2</span> Contact</h2>
+          <div class="inner collapsed">
             <div class="form-group">
             <label for="contact-name">Your name</label>
             <input type="text" class="form-control" id="contact-name" name="contact-name" placeholder="Enter your name">
           </div>
 
           <div class="form-group">
-            <label for="contact-phone">Contact phone number</label>
+            <label for="contact-phone">Contact mobile number</label>
             <input type="tel" class="form-control" id="contact-phone" name="contact-phone" aria-describedby="phoneHelp" placeholder="Enter contact phone number">
             <small id="phoneHelp" class="form-text text-muted">We only call you on this number if really nescesery</small>
           </div>
@@ -68,10 +68,10 @@ title: Signup to Simplii
   
 
         <div class="form-group box" id="delivery">
-          <h2>2 - Delivery</h2>
+          <h2><span>3</span> SIM Delivery</h2>
           <div class="inner expanded">
             <div class="form-group">
-            <label for="delivery-name">Your name</label>
+            <label for="delivery-name">Name</label>
             <input type="text" class="form-control" id="delivery-name" name="delivery-name" aria-describedby="nameHelp" placeholder="Enter your name">
             <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
           </div>
@@ -81,7 +81,7 @@ title: Signup to Simplii
             <input type="text" class="form-control" id="delivery-address" name="delivery-address" aria-describedby="delivery-addressHelp" placeholder="Enter your delivery address">
           </div>
 
-          <div class="form-group">
+          <div class="form-group" style="display: none;">
             <label for="delivery-address2">Floor, house name, etc.</label>
             <input type="text" class="form-control" id="delivery-address2" name="delivery-address2" aria-describedby="delivery-address2Help" placeholder="Enter your Floor, house name, etc.">
           </div>
@@ -115,9 +115,9 @@ title: Signup to Simplii
         </div>
 
         <div class="form-group box" id="payment">
-          <h2>3 - Payment</h2>
+          <h2><span>4</span> Payment</h2>
 
-          <div class="inner expanded">
+          <div class="inner collapsed">
             <div class="row">
             <div class="form-group col-sm-7" id="creditcard">
 
@@ -161,9 +161,16 @@ title: Signup to Simplii
         
     </div>
   
+    <div class="sidebar">
+      <div class="summary">
+        <div class="plan">
+          <span class="plan-title">20 GB data</span>
+        </div>
+      </div>
+    </div>
   
     <div class="sidebar" id="sidebar">
-        <div class="box">
+        <div class="box" style="display: none;">
             <h3>Your order</h3>
             <p id="sum-plan-name"></p>
             <p id="sum-contact-name"></p>
@@ -174,6 +181,7 @@ title: Signup to Simplii
                 <button type="submit" class="btn btn-success btn-block" id="submit-btn" disabled="disabled">Sign up</button>
             </div>
         </div>
+        <img src="/images/sidebar.svg">
         <p>Call us now if you want help signing up.</p>
     </div>
     </form>

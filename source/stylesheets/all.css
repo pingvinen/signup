@@ -21,8 +21,9 @@ h1 {
 }
 
 .box {
-	padding: 35px;
+	padding: 25px;
 	margin-bottom: 40px;
+	border-radius: 5px;
 	background: #fff;
 	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -31,6 +32,28 @@ h2 {
 	font-size: 2rem;
 	font-weight: 600;
 	margin-bottom: 1.5rem;
+}
+
+h2 span {
+	display: inline-block;
+	color: #fff;
+	width: 60px;
+	height: 60px;
+	background: rgb(118,49,204);
+	border-radius: 50px;
+	text-align: center;
+	font-weight: 300;
+	padding-top: 12px;
+	margin-right: 10px;
+}
+
+.completed h2 span {
+	background-color: rgb(136,194,72);
+}
+
+label {
+	font-weight: 500;
+	margin-bottom: 0.3rem;
 }
 
 
