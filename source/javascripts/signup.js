@@ -201,8 +201,8 @@ $(function() {
             errors.push('You must provide the card CVV');
             $cvv.addClass('invalid');
         }
-        else if (!isNumeric($cvv.val()) || $cvv.val().length != 3) {
-            errors.push('The CVV must be a number with 3 digits');
+        else if (!isNumeric($cvv.val()) || ($cvv.val().length != 3 && $cvv.val().length != 4)) {
+            errors.push('The CVV must be a number with 3 or 4 digits');
             $cvv.addClass('invalid');
         }
 
