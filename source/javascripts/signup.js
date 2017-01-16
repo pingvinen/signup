@@ -374,6 +374,18 @@ $(function() {
     }
 
 
+    function copyPortNumberToContactPhone() {
+        var newValue = numberSection.signupsection('getValue', 'port-number');
+        contactSection.signupsection('setValueIfEmpty', 'contact-phone', newValue);
+    }
+
+    function copyContactNameToDeliveryAndPayment() {
+        var newValue = contactSection.signupsection('getValue', 'contact-name');
+        deliverySection.signupsection('setValueIfEmpty', 'delivery-name', newValue);
+        paymentSection.signupsection('setValueIfEmpty', 'credit-card-name', newValue);
+    }
+
+
 
     /***************************************************************
      * Event handlers
@@ -384,7 +396,15 @@ $(function() {
         updateSignupButtonState();
     }
 
+    function onNext_number(section) {
+        copyPortNumberToContactPhone();
+        onNext(section);
+    }
 
+    function onNext_contact(section) {
+        copyContactNameToDeliveryAndPayment();
+        onNext(section);
+    }
 
     function onNext_forPayment(section) {
         disableSubmitButton();
@@ -395,7 +415,6 @@ $(function() {
 
         checkPaymentInfo();
     }
-
 
     function onNext(section) {
         finishSectionAndMoveToTheNextOne(section);
@@ -421,13 +440,13 @@ $(function() {
         onChange: onChange,
         onValidate: getNumberValidationErrors,
         onEdit: onEdit,
-        onNext: onNext
+        onNext: onNext_number
     });
     var contactSection = $('#contact').signupsection({
         onChange: onChange,
         onValidate: getContactValidationErrors,
         onEdit: onEdit,
-        onNext: onNext
+        onNext: onNext_contact
     });
     var deliverySection = $('#delivery').signupsection({
         onChange: onChange,

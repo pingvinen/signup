@@ -247,6 +247,25 @@
 
         getId: function getId() {
             return this.id;
+        },
+
+        _getField: function _getField(fieldName) {
+            return this.$form.find(':input[name='+fieldName+']');
+        },
+
+        getValue: function getValue(fieldName) {
+            return this._getField(fieldName).val();
+        },
+
+        setValue: function setValue(fieldName, newValue) {
+            this._getField(fieldName).val(newValue);
+            this._onChange(null, false);
+        },
+
+        setValueIfEmpty: function setValueIfEmpty(fieldName, newValue) {
+            if (this.getValue(fieldName).length == 0) {
+                this.setValue(fieldName, newValue);
+            }
         }
     });
 
