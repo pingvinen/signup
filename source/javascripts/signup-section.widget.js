@@ -63,15 +63,31 @@
 
         options: {
             isSaveable: true,
-            onChange: function defaultOnChange() { },
+            /**
+             * Fire every time a change occurs in the section.
+             * Validation has already been performed
+             * @param section
+             */
+            onChange: function defaultOnChange(section) { },
 
             /**
-             * This function should perform validation and
+             * This function should validate each field and
              * return an array of error messages
              */
             onValidate: function defaultOnValidate($form) { return []; },
 
-            onSubmit: function defaultSubmit(section) { }
+            /**
+             * Fired when the section is submitted - i.e. user is done
+             * with this section
+             * @param section
+             */
+            onNext: function defaultOnNext(section) { },
+
+            /**
+             * Is called when the section wants to be edited - i.e. the user clicks edit
+             * @param section The section
+             */
+            onEdit: function defaultOnEdit(section) { }
         },
 
         _create: function _create() {
@@ -83,10 +99,15 @@
             this.$form = this.element.find('form');
             this.$validationErrors = this.element.find('.validation-errors');
             this.$collapsable = this.element.find('.inner');
+            this.$edit = this.element.find('.edit-btn');
 
             this.$form.on('submit', $.proxy(this._onSubmit, this));
-            this.$form.find(':input').on('keyup blur', $.proxy(this._onChange, this));
+            this.$next.on('click', $.proxy(this._onSubmit, this));
+
+            this.$form.find(':input').not(':button').on('keyup blur', $.proxy(this._onChange, this));
             this.$form.find(':radio').on('click', $.proxy(this._onChange, this));
+
+            this.$edit.on('click', $.proxy(this._onEdit, this));
         },
 
         _enableNext: function _enableNext() {
@@ -97,11 +118,25 @@
             this.$next.attr('disabled', 'disabled');
         },
 
-        _onChange: function _onChange() {
+        _onChange: function _onChange(event, doUiUpdate) {
             this._numberSection_onChange();
 
             this.save();
-            this.options.onChange();
+
+            var isValid = false;
+            if (doUiUpdate || doUiUpdate === undefined) {
+                isValid = this.isValid();
+            } else {
+                isValid = this.isValidNoUi();
+            }
+
+            if (isValid) {
+                this._enableNext();
+            } else {
+                this._disableNext();
+            }
+
+            this.options.onChange(this.element);
         },
 
         /**
@@ -123,8 +158,13 @@
             }
         },
 
-        isValid: function isValid() {
+        _clearValidationErrors: function _clearValidationErrors() {
             this.$validationErrors.empty();
+            this.element.find('.invalid').removeClass('invalid');
+        },
+
+        isValid: function isValid() {
+            this._clearValidationErrors();
 
             var errors = this.options.onValidate(this.$form);
 
@@ -143,6 +183,12 @@
             return isValid;
         },
 
+        isValidNoUi: function isValidNoUi() {
+            var errors = this.options.onValidate(this.$form);
+
+            return errors.length == 0;
+        },
+
         addError: function addError(errorMessage) {
             this.$validationErrors.append(
                 $('<p></p>').text(errorMessage)
@@ -151,7 +197,11 @@
 
         _onSubmit: function _onSubmit(event) {
             event.preventDefault();
-            this.options.onSubmit(this.element);
+            this.options.onNext(this.element);
+        },
+
+        _onEdit: function _onEdit() {
+            this.options.onEdit(this.element);
         },
 
         save: function save() {
@@ -163,7 +213,7 @@
         prePopulate: function prePopulate() {
             if (this.options.isSaveable) {
                 prePopulateFormWithValuesFromLocalStorage(this.$form, this.localStorageItemKey);
-                this._onChange();
+                this._onChange(null, false);
             }
         },
 
@@ -186,6 +236,7 @@
         },
 
         expandAndFocus: function expandAndFocus() {
+            this._clearValidationErrors();
             this.$collapsable.removeClass('collapsed').addClass('expanded');
 
             if (this.element.hasClass('invalid-section')) {

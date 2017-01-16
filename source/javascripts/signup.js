@@ -337,34 +337,16 @@ $(function() {
 
 
 
-
-    /***************************************************************
-     * Event handlers
-     */
-
-    function onChange() {
-        // validate sections
-        var allSectionsAreValid = true;
-
-
-        sections.forEach(function(section) {
-            allSectionsAreValid &= section.signupsection('isValid');
-        });
-
-        if (allSectionsAreValid) {
+    function updateSignupButtonState() {
+        if (areAllSectionsValid(false)) {
             enableSubmitButton();
         } else {
             disableSubmitButton();
         }
-
-        updateSidebar();
     }
 
 
-
-    function onSubmit(section) {
-        onChange();
-
+    function finishSectionAndMoveToTheNextOne(section) {
         if (section && section.signupsection('isValid')) {
             // go to next section
             var next = nextSectionMap[section.signupsection('getId')];
@@ -374,9 +356,59 @@ $(function() {
                 next.signupsection('expandAndFocus');
             }
         }
+    }
 
+
+    function areAllSectionsValid(doUpdateUi) {
+        var method = 'isValid';
+        if (!doUpdateUi) {
+            method = 'isValidNoUi';
+        }
+
+        var allSectionsAreValid = true;
+        sections.forEach(function(section) {
+            allSectionsAreValid &= section.signupsection(method);
+        });
+
+        return allSectionsAreValid;
+    }
+
+
+
+    /***************************************************************
+     * Event handlers
+     */
+
+    function onChange(section) {
+        updateSidebar();
+        updateSignupButtonState();
+    }
+
+
+
+    function onNext_forPayment(section) {
         disableSubmitButton();
+
+        if (!areAllSectionsValid(true)) {
+            return;
+        }
+
         checkPaymentInfo();
+    }
+
+
+    function onNext(section) {
+        finishSectionAndMoveToTheNextOne(section);
+    }
+
+
+
+    function onEdit(section) {
+        sections.forEach(function(cur) {
+            cur.signupsection('collapse');
+        });
+
+        section.signupsection('expandAndFocus');
     }
 
 
@@ -388,22 +420,26 @@ $(function() {
     var numberSection = $('#number').signupsection({
         onChange: onChange,
         onValidate: getNumberValidationErrors,
-        onSubmit: onSubmit
+        onEdit: onEdit,
+        onNext: onNext
     });
     var contactSection = $('#contact').signupsection({
         onChange: onChange,
         onValidate: getContactValidationErrors,
-        onSubmit: onSubmit
+        onEdit: onEdit,
+        onNext: onNext
     });
     var deliverySection = $('#delivery').signupsection({
         onChange: onChange,
         onValidate: getDeliveryValidationErrors,
-        onSubmit: onSubmit
+        onEdit: onEdit,
+        onNext: onNext
     });
     var paymentSection = $('#payment').signupsection({
         onChange: onChange,
         onValidate: getPaymentValidationErrors,
-        onSubmit: onSubmit,
+        onEdit: onEdit,
+        onNext: onNext_forPayment,
         isSaveable: false
     });
 
@@ -439,11 +475,11 @@ $(function() {
     // expand first invalid section
     var doCheck = true;
     sections.forEach(function(section) {
-        if (doCheck && !section.signupsection('isValid')) {
+        if (doCheck && !section.signupsection('isValidNoUi')) {
             section.signupsection('expandAndFocus');
             doCheck = false;
         }
     });
 
-    $submitBtn.on('click', onSubmit);
+    $submitBtn.on('click', onNext_forPayment);
 });
