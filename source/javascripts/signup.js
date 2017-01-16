@@ -57,18 +57,18 @@ $(function() {
         var $portNumber = $form.find('#port-number');
 
         if ($numberPort.length == 0) {
-            errors.push('You must select whether to get a new number or keep an old one');
+            errors.push({ field: 'number-port', msg: 'You must select whether to get a new number or keep an old one' });
         }
 
         else {
             if ($numberPort.val() === 'number-port-true')
             {
                 if (stringIsEmptyOrWhitespace($portNumber.val())) {
-                    errors.push('If you wish to keep your existing number, you must tell us what it is');
+                    errors.push({ field: 'port-number', msg: 'If you wish to keep your existing number, you must tell us what it is' });
                     $portNumber.addClass('invalid');
                 }
                 else if (!isMexicanMobilePhoneNumber($portNumber.val())) {
-                    errors.push('The provided phone number does not seem to be valid');
+                    errors.push({ field: 'port-number', msg: 'The provided phone number does not seem to be valid' });
                     $portNumber.addClass('invalid');
                 }
             }
@@ -86,24 +86,24 @@ $(function() {
         var $email = $form.find('#contact-email');
 
         if (stringIsEmptyOrWhitespace($name.val())) {
-            errors.push('You must provide a name');
+            errors.push({ field: 'contact-name', msg: 'You must provide a name' });
             $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($phoneNumber.val())) {
-            errors.push('You must provide a phone number');
+            errors.push({ field: 'contact-phone', msg: 'You must provide a phone number' });
             $phoneNumber.addClass('invalid');
         }
         else if (!isMexicanMobilePhoneNumber($phoneNumber.val())) {
-            errors.push('The provided phone number does not seem to be valid');
+            errors.push({ field: 'contact-phone', msg: 'The provided phone number does not seem to be valid' });
             $phoneNumber.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($email.val())) {
-            errors.push('You must provide an email address');
+            errors.push({ field: 'contact-email', msg: 'You must provide an email address' });
             $email.addClass('invalid');
         } else if (!isEmailAddress($email.val())) {
-            errors.push('The provided email address does not seem to be valid');
+            errors.push({ field: 'contact-email', msg: 'The provided email address does not seem to be valid' });
             $email.addClass('invalid');
         }
 
@@ -122,32 +122,32 @@ $(function() {
         var $state = $form.find('#delivery-state');
 
         if (stringIsEmptyOrWhitespace($name.val())) {
-            errors.push('You must provide a name');
+            errors.push({ field: 'delivery-name', msg: 'You must provide a name' });
             $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($address.val())) {
-            errors.push('You must provide an address');
+            errors.push({ field: 'delivery-address', msg: 'You must provide an address' });
             $address.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($address2.val())) {
-            errors.push('You must provide a floor, house name or similar');
+            errors.push({ field: 'delivery-address2', msg: 'You must provide a floor, house name or similar' });
             $address2.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($area.val())) {
-            errors.push('You must provide an area');
+            errors.push({ field: 'delivery-area', msg: 'You must provide an area' });
             $area.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($postal.val())) {
-            errors.push('You must provide a postal code');
+            errors.push({ field: 'delivery-postal', msg: 'You must provide a postal code' });
             $postal.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($state.val())) {
-            errors.push('You must provide a state');
+            errors.push({ field: 'delivery-state', msg: 'You must provide a state' });
             $state.addClass('invalid');
         }
 
@@ -165,44 +165,44 @@ $(function() {
         var $cvv = $form.find('#credit-card-cvv');
 
         if (stringIsEmptyOrWhitespace($name.val())) {
-            errors.push('You must provide the card holder name');
+            errors.push({ field: 'credit-card-name', msg: 'You must provide the card holder name' });
             $name.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($pan.val())) {
-            errors.push('You must provide card number');
+            errors.push({ field: 'credit-card-number', msg: 'You must provide card number' });
             $pan.addClass('invalid');
         }
         else if (!isNumeric($pan.val()) || $pan.val().length < 16) {
-            errors.push('The card number must be numbers only and a minimum of 16 digits');
+            errors.push({ field: 'credit-card-number', msg: 'The card number must be numbers only and a minimum of 16 digits' });
             $pan.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($expMonth.val())) {
-            errors.push('You must provide the card expiry month');
+            errors.push({ field: 'credit-card-exp-month', msg: 'You must provide the card expiry month' });
             $expMonth.addClass('invalid');
         }
         else if (!isNumeric($expMonth.val()) || $expMonth.val() < 1 || $expMonth.val() > 12) {
-            errors.push('The card expiry month must be a number between 1 and 12');
+            errors.push({ field: 'credit-card-exp-month', msg: 'The card expiry month must be a number between 1 and 12' });
             $expMonth.addClass('invalid');
         }
 
         var thisYear = (new Date()).getFullYear() - 2000;
         if (stringIsEmptyOrWhitespace($expYear.val())) {
-            errors.push('You must provide the card expiry year');
+            errors.push({ field: 'credit-card-exp-year', msg: 'You must provide the card expiry year' });
             $expYear.addClass('invalid');
         }
         else if (!isNumeric($expYear.val()) || $expYear.val() < thisYear || $expYear.val() > 99) {
-            errors.push('The card expiry year must be a number between '+thisYear+' and 99');
+            errors.push({ field: 'credit-card-exp-year', msg: 'The card expiry year must be a number between '+thisYear+' and 99' });
             $expYear.addClass('invalid');
         }
 
         if (stringIsEmptyOrWhitespace($cvv.val())) {
-            errors.push('You must provide the card CVV');
+            errors.push({ field: 'credit-card-cvv', msg: 'You must provide the card CVV' });
             $cvv.addClass('invalid');
         }
         else if (!isNumeric($cvv.val()) || ($cvv.val().length != 3 && $cvv.val().length != 4)) {
-            errors.push('The CVV must be a number with 3 or 4 digits');
+            errors.push({ field: 'credit-card-cvv', msg: 'The CVV must be a number with 3 or 4 digits' });
             $cvv.addClass('invalid');
         }
 
@@ -225,7 +225,7 @@ $(function() {
             },
 
             function onRejected(error) {
-                paymentSection.signupsection('addError', error);
+                paymentSection.signupsection('addError', { field: 'credit-card-number', msg: error });
                 enableSubmitButton();
             }
         );

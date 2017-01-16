@@ -33,12 +33,13 @@ title: Signup to Simplii
                   Transfer number
                 </label>
               </div>
+                <small id="number-port-error" class="validation-error"></small>
           </div>
           <div class="transfer">
             <label>Your number to be transferred</label>
             <input class="form-control" type="tel" name="port-number" id="port-number" />
+              <small id="port-number-error" class="validation-error"></small>
           </div>
-            <div class="validation-errors" id="number-validation-errors"></div>
 
           <button type="submit" class="btn btn-primary next-btn">Next</button>
           </div>
@@ -53,22 +54,22 @@ title: Signup to Simplii
             <div class="form-group">
             <label for="contact-name">Your name</label>
             <input type="text" class="form-control" id="contact-name" name="contact-name" placeholder="Enter your name">
+                <small id="contact-name-error" class="validation-error"></small>
           </div>
 
           <div class="form-group">
             <label for="contact-phone">Contact phone number</label>
             <input type="tel" class="form-control" id="contact-phone" name="contact-phone" aria-describedby="phoneHelp" placeholder="Enter contact phone number">
             <small id="phoneHelp" class="form-text text-muted">We only call you on this number if really necessary</small>
+              <small id="contact-phone-error" class="validation-error"></small>
           </div>
   
           <div class="form-group">
             <label for="contact-email">Email address</label>
             <input type="email" class="form-control" id="contact-email" name="contact-email" aria-describedby="emailHelp" placeholder="Enter email">
             <small id="emailHelp" class="form-text text-muted">We promise not to share your email with anyone else and will only send you occational informational emails.</small>
+              <small id="contact-email-error" class="validation-error"></small>
           </div>
-
-            <div class="validation-errors" id="contact-validation-errors"></div>
-
             <button type="submit" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
@@ -84,32 +85,38 @@ title: Signup to Simplii
             <label for="delivery-name">Your name</label>
             <input type="text" class="form-control" id="delivery-name" name="delivery-name" aria-describedby="nameHelp" placeholder="Enter your name">
             <small id="nameHelp" class="form-text text-muted">Only used for delivery</small>
+                <small id="delivery-name-error" class="validation-error"></small>
           </div>
 
           <div class="form-group">
             <label for="delivery-address">Address</label>
             <input type="text" class="form-control" id="delivery-address" name="delivery-address" aria-describedby="delivery-addressHelp" placeholder="Enter your delivery address">
+              <small id="delivery-address-error" class="validation-error"></small>
           </div>
 
           <div class="form-group">
             <label for="delivery-address2">Floor, house name, etc.</label>
             <input type="text" class="form-control" id="delivery-address2" name="delivery-address2" aria-describedby="delivery-address2Help" placeholder="Enter your Floor, house name, etc.">
+              <small id="delivery-address2-error" class="validation-error"></small>
           </div>
 
           <div class="form-group">
             <label for="delivery-area">Area</label>
             <input type="text" class="form-control" id="delivery-area" name="delivery-area" aria-describedby="delivery-areaHelp" placeholder="Eg. Miguel Hidalgo">
+              <small id="delivery-area-error" class="validation-error"></small>
           </div>
 
           <div class="row">
             <div class="form-group col-sm-3">
               <label for="delivery-postal">Postal code</label>
               <input type="number" class="form-control" id="delivery-postal" name="delivery-postal" aria-describedby="delivery-areaHelp"  placeholder="eg. 11930">
+                <small id="delivery-postal-error" class="validation-error"></small>
             </div>
   
             <div class="form-group col-sm-9">
                 <label for="delivery-area">State</label>
                 <input type="text" class="form-control" id="delivery-state" name="delivery-state" aria-describedby="delivery-stateHelp"  placeholder="Enter your delivery state">
+                <small id="delivery-state-error" class="validation-error"></small>
                 </div>
             </div>
 
@@ -117,9 +124,6 @@ title: Signup to Simplii
                 <label for="delivery-instructions">Special delivery instructions</label>
                 <textarea class="form-control" id="delivery-instructions" name="delivery-instructions" rows="3" placeholder="Eg. Press code 2342 at the gate to enter the secret lair."></textarea>
             </div>
-
-            <div class="validation-errors" id="delivery-validation-errors"></div>
-
             <button type="submit" class="btn btn-primary next-btn">Next</button>
           </div>
             </form>
@@ -139,30 +143,34 @@ title: Signup to Simplii
             <div class="form-group">
                 <label for="credit-card-name">Name on card</label>
                 <input type="text" class="form-control" id="credit-card-name" payu-content="name_card" placeholder="Enter your name">
+                <small id="credit-card-name-error" class="validation-error"></small>
               </div>
               <div class="form-group">
                 <label for="credit-card-number">Credit card number</label>
                 <input type="number" class="form-control" id="credit-card-number" payu-content="number" aria-describedby="numberHelp" placeholder="**** **** **** ****">
+                  <small id="credit-card-number-error" class="validation-error"></small>
               </div>
   
               <div class="row">
                 <div class="form-group col-sm-4">
                   <label for="credit-card-exp-month">Exp. Month</label>
                   <input name="credit-card-exp-month" id="credit-card-exp-month" payu-content="exp_month" class="form-control" type="number" min="1" max="12" placeholder="MM">
+                    <small id="credit-card-exp-month-error" class="validation-error"></small>
                 </div>
                 <div class="form-group col-sm-4">
                   <label for="credit-card-exp-year">Exp. Year</label>
                   <input name="credit-card-exp-year" id="credit-card-exp-year" payu-content="exp_year" class="form-control" type="number" min="17" max="99" maxlength="2" placeholder="YY">
+                    <small id="credit-card-exp-year-error" class="validation-error"></small>
                 </div>
                 <div class="form-group col-sm-4">
                   <label for="credit-card-cvv">CVV</label>
                   <input name="credit-card-cvv" id="credit-card-cvv" payu-content="cvc" class="form-control" type="number" max="9999" minlength="3" maxlength="4" placeholder="***">
+                    <small id="credit-card-cvv-error" class="validation-error"></small>
                 </div>
               </div>
             </div>
           </div>
             <input payu-content="payer_id" value="MI PAYER ID" type="hidden">
-            <div class="validation-errors" id="payment-validation-errors"></div>
 
               <button type="submit" class="btn btn-success next-btn">Sign up</button>
           </div>

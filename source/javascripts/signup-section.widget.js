@@ -97,7 +97,6 @@
 
             this.$next = this.element.find('.next-btn');
             this.$form = this.element.find('form');
-            this.$validationErrors = this.element.find('.validation-errors');
             this.$collapsable = this.element.find('.inner');
             this.$edit = this.element.find('.edit-btn');
 
@@ -159,7 +158,7 @@
         },
 
         _clearValidationErrors: function _clearValidationErrors() {
-            this.$validationErrors.empty();
+            this.element.find('.validation-error').empty();
             this.element.find('.invalid').removeClass('invalid');
         },
 
@@ -189,9 +188,9 @@
             return errors.length == 0;
         },
 
-        addError: function addError(errorMessage) {
-            this.$validationErrors.append(
-                $('<p></p>').text(errorMessage)
+        addError: function addError(error) {
+            this.element.find('#'+error.field+'-error').append(
+                $('<p></p>').text(error.msg)
             );
         },
 
